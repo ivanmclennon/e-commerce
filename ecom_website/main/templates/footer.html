@@ -1,0 +1,20 @@
+{% load flatpages %}
+{% get_flatpages as flatpages %}
+
+<footer class="footer mt-auto py-2 bg-light">
+    <div class="container py-2">
+        <div class="row">
+            {% for page in flatpages %}
+
+            <div class="col-6">
+                <a href="{{ page.url }}">
+                    <h5>
+                        {{ page.title }}
+                    </h5>
+                </a>
+            </div>
+
+            {% endfor %}
+        </div>
+    </div>
+</footer>
