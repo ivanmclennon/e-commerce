@@ -1,19 +1,21 @@
 from django.contrib import admin
+from django import forms
+from django.db import models
 from django.contrib.flatpages.models import FlatPage
-# from django.contrib.flatpages.admin import FlatPageAdmin
+from django.contrib.flatpages.admin import FlatPageAdmin
 
-from ckeditor.fields import RichTextField
+from ckeditor.widgets import CKEditorWidget
 
 
-admin.site.unregister(FlatPage)
-
+class FlatPageAdminForm(forms.ModelForm):
+    content = forms.CharField(widget=CKEditorWidget())
+    class Meta:
+        model = FlatPage
+        fields = '__all__'
 
 class FlatPageAdmin(admin.ModelAdmin):
 
-    content = RichTextField()
+    form = FlatPageAdminForm
 
-    class Meta:
-        model = FlatPage
-
-
+admin.site.unregister(FlatPage)
 admin.site.register(FlatPage, FlatPageAdmin)
