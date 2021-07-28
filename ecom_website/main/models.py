@@ -20,7 +20,7 @@ class Tag(models.Model):
 
 class Category(models.Model):
     title = models.CharField(max_length=32)
-    slug = models.SlugField(auto_created=True)
+    slug = models.SlugField(blank=True)
 
 
 class Listing(models.Model):
