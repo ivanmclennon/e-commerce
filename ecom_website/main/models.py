@@ -15,16 +15,16 @@ class Seller(models.Model):
 
 
 class Tag(models.Model):
-    title = models.CharField()
+    title = models.CharField(max_length=16)
 
 
 class Category(models.Model):
-    title = models.CharField()
+    title = models.CharField(max_length=32)
     slug = models.SlugField(auto_created=True)
 
 
 class Listing(models.Model):
-    title = models.CharField()
+    title = models.CharField(max_length=64)
     description = models.TextField()
     category = models.ForeignKey(
         to=Category,
