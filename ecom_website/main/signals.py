@@ -1,6 +1,6 @@
 import string
 import random
-
+from unidecode import unidecode as ud
 from django.utils.text import slugify
 
 
@@ -12,7 +12,7 @@ def unique_slug_generator(instance, new_slug=None):
     if new_slug:
         slug = new_slug
     else:
-        slug = slugify(instance.title)
+        slug = slugify(ud(instance.title))
 
     ModelClass = instance.__class__
     qs_exists = ModelClass.objects.filter(slug=slug).exists()
