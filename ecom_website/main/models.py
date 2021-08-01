@@ -88,6 +88,7 @@ class Listing(models.Model):
         related_name='listings',
         blank=True
     )
+    price = models.PositiveIntegerField()
 
     class Meta:
         verbose_name = 'listing'
