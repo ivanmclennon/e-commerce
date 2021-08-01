@@ -98,7 +98,6 @@ class Listing(models.Model):
         abstract = True
 
 
-
 COLOR_CHOICES = (
     ('WHITE', 'white'),
     ('BLACK', 'black'),
