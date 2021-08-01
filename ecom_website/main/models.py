@@ -1,18 +1,17 @@
+from abc import ABC
+
 from django.db import models
 from django.contrib.auth.models import User
 
 from django.db.models.signals import pre_save
 from django.dispatch import receiver
 
+from django_countries.fields import CountryField
+
 from .signals import unique_slug_generator
 
 
-class Seller(models.Model):
-    user = models.OneToOneField(
-        to=User,
-        on_delete=models.PROTECT,
-        primary_key=True
-    )
+class Seller(User):
 
     @property
     def count_listings(self) -> int:
@@ -20,7 +19,7 @@ class Seller(models.Model):
         return self.listings.all().count()
 
     def __str__(self) -> str:
-        return self.user.username
+        return self.username
 
     class Meta:
         verbose_name = 'seller'
@@ -74,22 +73,128 @@ class Listing(models.Model):
     category = models.ForeignKey(
         to=Category,
         on_delete=models.PROTECT,
-        related_name='listings'
+        related_name='%(class)s'
     )
     seller = models.ForeignKey(
         to=Seller,
         on_delete=models.PROTECT,
-        related_name='listings'
+        related_name='%(class)s'
     )
     date_created = models.DateTimeField(auto_now_add=True)
     date_modified = models.DateTimeField(auto_now=True)
     tags = models.ManyToManyField(
         to=Tag,
-        related_name='listings',
+        related_name='%(class)s',
         blank=True
     )
     price = models.PositiveIntegerField()
 
+    def __str__(self) -> str:
+        return self.title
+
     class Meta:
         verbose_name = 'listing'
         verbose_name_plural = 'listings'
+        abstract = True
+
+
+COLOR_CHOICES = (
+    ('WHITE', 'white'),
+    ('BLACK', 'black'),
+    ('GREY', 'grey'),
+    ('RED', 'red'),
+    ('GREEN', 'green'),
+    ('BLUE', 'blue'),
+    ('YELLOW', 'yellow'),
+    ('PURPLE', 'purple'),
+    ('ORANGE', 'orange'),
+    ('PINK', 'pink'),
+)
+
+
+class ItemListing(Listing):
+    """
+    Unspecified general item class.
+    :param weight: weight in kg 0.01
+    :param made_in: manufacturer country
+    :param color: item color
+    """
+
+    # specify validation constraints in the Form
+    weight = models.FloatField()
+    # use CountrySelectWidget in Form
+    made_in = CountryField(blank_label='(select country)')
+    color = models.CharField(
+        max_length=16,
+        choices=COLOR_CHOICES,
+        default="WHITE"
+    )
+
+    class Meta:
+        verbose_name = 'item'
+        verbose_name_plural = 'items'
+
+
+class AutoListing(Listing):
+
+    # specify validation constraints in the Form
+    weight = models.FloatField()
+    # use CountrySelectWidget in Form
+    made_in = CountryField(blank_label='(select country)')
+    color = models.CharField(
+        max_length=16,
+        choices=COLOR_CHOICES,
+        default="WHITE"
+    )
+
+    CONDITION_CHOICES = (
+        ("NEW", 'new'),
+        ("USED", 'used'),
+    )
+
+    condition = models.CharField(
+        max_length=8,
+        choices=CONDITION_CHOICES,
+        default="NEW"
+    )
+    # specify constraints in Form
+    mileage = models.IntegerField()
+
+    class Meta:
+        verbose_name = 'auto'
+        verbose_name_plural = 'autos'
+
+
+class ServiceListing(Listing):
+
+    PLACE_TYPE_CHOICES = (
+        ('ONLINE', 'online'),
+        ('IRL', 'in person'),
+    )
+    place_type = models.CharField(
+        max_length=16,
+        choices=PLACE_TYPE_CHOICES,
+        default='IRL'
+    )
+
+    class Meta:
+        verbose_name = 'service'
+        verbose_name_plural = 'services'
+
+
+class ItemProxy(ItemListing):
+    class Meta:
+        proxy = True
+        ordering = ["date_created"]
+
+
+class AutoProxy(AutoListing):
+    class Meta:
+        proxy = True
+        ordering = ["date_created"]
+
+
+class ServiceProxy(ServiceListing):
+    class Meta:
+        proxy = True
+        ordering = ["date_created"]
