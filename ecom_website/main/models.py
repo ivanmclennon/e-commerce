@@ -73,18 +73,18 @@ class Listing(models.Model):
     category = models.ForeignKey(
         to=Category,
         on_delete=models.PROTECT,
-        related_name='listings'
+        related_name='%(class)s'
     )
     seller = models.ForeignKey(
         to=Seller,
         on_delete=models.PROTECT,
-        related_name='listings'
+        related_name='%(class)s'
     )
     date_created = models.DateTimeField(auto_now_add=True)
     date_modified = models.DateTimeField(auto_now=True)
     tags = models.ManyToManyField(
         to=Tag,
-        related_name='listings',
+        related_name='%(class)s',
         blank=True
     )
     price = models.PositiveIntegerField()
@@ -147,14 +147,15 @@ class AutoListing(Listing):
         default="WHITE"
     )
 
-    class Condition(models.TextChoices):
-        NEW = 'NEW', _('New')
-        USED = 'USED', _('Used')
+    CONDITION_CHOICES = (
+        ("NEW", 'new'),
+        ("USED", 'used'),
+    )
 
     condition = models.CharField(
         max_length=8,
-        choices=Condition.choices,
-        default=Condition.NEW
+        choices=CONDITION_CHOICES,
+        default="NEW"
     )
     # specify constraints in Form
     mileage = models.IntegerField()
@@ -181,7 +182,19 @@ class ServiceListing(Listing):
         verbose_name_plural = 'services'
 
 
-class ListingProxy(Listing):
+class ItemProxy(ItemListing):
+    class Meta:
+        proxy = True
+        ordering = ["date_created"]
+
+
+class AutoProxy(AutoListing):
+    class Meta:
+        proxy = True
+        ordering = ["date_created"]
+
+
+class ServiceProxy(ServiceListing):
     class Meta:
         proxy = True
         ordering = ["date_created"]

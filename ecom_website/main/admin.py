@@ -7,7 +7,7 @@ from django.contrib.flatpages.admin import FlatPageAdmin
 
 from ckeditor.widgets import CKEditorWidget
 
-from .models import Category, Tag, Seller, Listing, ListingProxy
+from .models import Category, Tag, Seller, Listing, ItemProxy, AutoProxy, ServiceProxy
 
 
 @admin.register(Category)
@@ -34,15 +34,12 @@ admin.site.register(User, UserAdmin)
 
 @admin.register(Seller)
 class SellerAdmin(admin.ModelAdmin):
-    search_fields = ('user',)
-    list_display = ('user',)
+    search_fields = ('username',)
+    list_display = ('username','email')
 
 
-admin.site.unregister(Listing)
-
-
-@admin.register(ListingProxy)
-class ListingProxyAdmin(admin.ModelAdmin):
+@admin.register(ItemProxy)
+class ItemProxyAdmin(admin.ModelAdmin):
     search_fields = ('title', 'category', 'seller',)
     list_display = (
         'title',
@@ -51,6 +48,32 @@ class ListingProxyAdmin(admin.ModelAdmin):
         'price',
         'date_created',
         'date_modified',
+    )
+
+
+@admin.register(AutoProxy)
+class AutoProxyAdmin(admin.ModelAdmin):
+    search_fields = ('title', 'category', 'seller',)
+    list_display = (
+        'title',
+        'category',
+        'condition',
+        'seller',
+        'price',
+        'date_created',
+    )
+
+
+@admin.register(ServiceProxy)
+class ServiceProxyAdmin(admin.ModelAdmin):
+    search_fields = ('title', 'category', 'seller',)
+    list_display = (
+        'title',
+        'category',
+        'place_type',
+        'seller',
+        'price',
+        'date_created',
     )
 
 
