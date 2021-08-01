@@ -11,12 +11,7 @@ from django_countries.fields import CountryField
 from .signals import unique_slug_generator
 
 
-class Seller(models.Model):
-    user = models.OneToOneField(
-        to=User,
-        on_delete=models.PROTECT,
-        primary_key=True
-    )
+class Seller(User):
 
     @property
     def count_listings(self) -> int:
@@ -24,7 +19,7 @@ class Seller(models.Model):
         return self.listings.all().count()
 
     def __str__(self) -> str:
-        return self.user.username
+        return self.username
 
     class Meta:
         verbose_name = 'seller'
@@ -101,6 +96,7 @@ class Listing(models.Model):
         verbose_name = 'listing'
         verbose_name_plural = 'listings'
         abstract = True
+
 
 
 COLOR_CHOICES = (
@@ -184,3 +180,9 @@ class ServiceListing(Listing):
     class Meta:
         verbose_name = 'service'
         verbose_name_plural = 'services'
+
+
+class ListingProxy(Listing):
+    class Meta:
+        proxy = True
+        ordering = ["date_created"]
