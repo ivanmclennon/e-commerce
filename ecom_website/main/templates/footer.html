@@ -2,7 +2,7 @@
 {% get_flatpages as flatpages %}
 
 <footer class="footer mt-auto py-2 bg-light">
-    <div class="container py-2">
+    <div class="container py-4" style="color: black;">
         <div class="row">
             {% for page in flatpages %}
 
@@ -15,6 +15,11 @@
             </div>
 
             {% endfor %}
+        </div>
+        <div class="row">
+            <div class="col-12">
+                All rights reserved, {% now 'Y' %}
+            </div>
         </div>
     </div>
 </footer>
