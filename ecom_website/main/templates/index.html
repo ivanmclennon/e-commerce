@@ -1,13 +1,16 @@
 {% extends 'base.html' %}
 
-
-
 {% block title %}
     Homepage
 {% endblock %}
 
 {% block body %}
-    
-    <h1>Hello world!</h1>
+    {% if site_in_maintenance %}
+        <div class="overlay">
+            Site in maintenance, we'll be back soon!
+        </div>
+    {% else %}
+        <h1>Hello, {{ user.username }}!</h1>
+    {% endif %}
 
 {% endblock %}

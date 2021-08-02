@@ -32,6 +32,8 @@ ALLOWED_HOSTS = []
 
 SITE_ID = 1
 
+MAINTENANCE_MODE = False
+
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
