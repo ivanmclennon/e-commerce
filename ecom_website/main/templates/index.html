@@ -4,13 +4,10 @@
     Homepage
 {% endblock %}
 
-{% block body %}
-    {% if site_in_maintenance %}
-        <div class="overlay">
-            Site in maintenance, we'll be back soon!
-        </div>
-    {% else %}
-        <h1>Hello, {{ user.username }}!</h1>
-    {% endif %}
+{% block main %}
 
-{% endblock %}
+    <div class="d-flex justify-content-center">
+        <h1>Hello, {{ user.username }}!</h1>
+    </div>
+
+{% endblock main %}
