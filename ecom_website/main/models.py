@@ -20,7 +20,11 @@ class Seller(User):
     @property
     def count_listings(self) -> int:
         """Count listings published by seller"""
-        return self.listings.all().count()
+        return (
+            self.itemlisting_set.count()
+            + self.autolisting_set.count()
+            + self.servicelisting_set.count()
+        )
 
     def __str__(self) -> str:
         return self.username
@@ -106,21 +110,21 @@ class Listing(models.Model):
     category = models.ForeignKey(
         to=Category,
         on_delete=models.PROTECT,
-        related_name='%(class)s'
+        related_name='%(class)s_set'
     )
     seller = models.ForeignKey(
         to=Seller,
         on_delete=models.PROTECT,
-        related_name='%(class)s'
+        related_name='%(class)s_set'
     )
     date_created = models.DateTimeField(auto_now_add=True)
     date_modified = models.DateTimeField(auto_now=True)
     tags = models.ManyToManyField(
         to=Tag,
-        related_name='%(class)s',
+        related_name='%(class)s_set',
         blank=True
     )
-    price = models.PositiveIntegerField()
+    price = models.PositiveIntegerField(default=0, blank=False)
 
     def __str__(self) -> str:
         return self.title
@@ -200,7 +204,7 @@ class AutoListing(Listing):
         default="NEW"
     )
     # specify constraints in Form
-    mileage = models.PositiveIntegerField()
+    mileage = models.PositiveIntegerField(default=0, blank=False)
 
     class Meta:
         verbose_name = 'auto'
