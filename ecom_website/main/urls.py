@@ -1,8 +1,11 @@
 from django.urls import path, include
 
-from . import views
+from .views import index, ItemList, AutoList, ServiceList
 
 
 urlpatterns = [
-    path('', views.index, name='index'),
+    path('', index, name='index'),
+    path('items/', ItemList.as_view()),
+    path('cars/', AutoList.as_view()),
+    path('services/', ServiceList.as_view()),
 ]
