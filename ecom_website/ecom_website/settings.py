@@ -82,7 +82,11 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'maintenance_mode.context_processors.maintenance_mode',
             ],
+            'builtins': [
+                'main.templatetags.main_tags',
+            ]
         },
     },
 ]
