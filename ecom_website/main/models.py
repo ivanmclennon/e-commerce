@@ -12,7 +12,11 @@ from .signals import unique_slug_generator
 
 
 class Seller(User):
+    """
+    Seller class based on auth.User
 
+    :prop count_listings: number of listings published by seller
+    """
     @property
     def count_listings(self) -> int:
         """Count listings published by seller"""
@@ -27,6 +31,11 @@ class Seller(User):
 
 
 class Tag(models.Model):
+    """
+    Listing tag class
+
+    :param title: unique string title
+    """
     title = models.CharField(
         max_length=16,
         db_index=True,
@@ -42,6 +51,12 @@ class Tag(models.Model):
 
 
 class Category(models.Model):
+    """
+    Listing category class
+
+    :param title: unique string title
+    :param slug: unique auto-created slug from title
+    """
     title = models.CharField(
         max_length=32,
         db_index=True,
@@ -63,11 +78,29 @@ class Category(models.Model):
 
 @receiver(pre_save, sender=Category)
 def pre_save_receiver(sender, instance, *args, **kwargs):
+    """
+    Creates unique slug attr from Category title pre-save
+
+    :param sender: Category model
+    :param instance: Category model instance
+    """
     if not instance.slug:
         instance.slug = unique_slug_generator(instance)
 
 
 class Listing(models.Model):
+    """
+    Abstract base model class for listings
+
+    :param title: string title
+    :param description: text description
+    :param category: foreign key to Category
+    :param seller: foreign key to Seller
+    :param date_created: auto datetime for object creation
+    :param date_modified: auto datetime for object modification
+    :param tags: list of applied tags (many-to-many)
+    :param price: integer listing price
+    """
     title = models.CharField(max_length=64, db_index=True)
     description = models.TextField()
     category = models.ForeignKey(
@@ -114,10 +147,11 @@ COLOR_CHOICES = (
 
 class ItemListing(Listing):
     """
-    Unspecified general item class.
+    Unspecified general item listing class
+
     :param weight: weight in kg 0.01
     :param made_in: manufacturer country
-    :param color: item color
+    :param color: item color from COLOR_CHOICES
     """
 
     # specify validation constraints in the Form
@@ -136,7 +170,15 @@ class ItemListing(Listing):
 
 
 class AutoListing(Listing):
+    """
+    Automobile listing model
 
+    :param weight: weight in kg 
+    :param made_in: manufacturer country
+    :param color: item color from COLOR_CHOICES
+    :param condition: new/used
+    :param mileage: distance traveled in kilometers
+    """
     # specify validation constraints in the Form
     weight = models.FloatField()
     # use CountrySelectWidget in Form
@@ -158,7 +200,7 @@ class AutoListing(Listing):
         default="NEW"
     )
     # specify constraints in Form
-    mileage = models.IntegerField()
+    mileage = models.PositiveIntegerField()
 
     class Meta:
         verbose_name = 'auto'
@@ -166,7 +208,11 @@ class AutoListing(Listing):
 
 
 class ServiceListing(Listing):
+    """
+    Service listing model
 
+    :param place_type: online/irl
+    """
     PLACE_TYPE_CHOICES = (
         ('ONLINE', 'online'),
         ('IRL', 'in person'),
