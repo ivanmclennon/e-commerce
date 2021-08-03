@@ -3,8 +3,12 @@
 {% block main %}
     <h2>Cars</h2>
     <ul>
-        {% for item in object_list %}
-            <li>{{ item.title }}</li>
+        {% for car in object_list %}
+            <li>
+                <a href="{% url 'car_detail' car.id %}">
+                    {{ car.title }}
+                </a>
+            </li>
         {% endfor %}
     </ul>
 {% endblock main %}
