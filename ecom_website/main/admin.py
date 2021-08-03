@@ -35,7 +35,7 @@ admin.site.register(User, UserAdmin)
 @admin.register(Seller)
 class SellerAdmin(admin.ModelAdmin):
     search_fields = ('username',)
-    list_display = ('username','email')
+    list_display = ('username', 'email')
 
 
 @admin.register(ItemProxy)
