@@ -7,13 +7,15 @@ from django.contrib.flatpages.admin import FlatPageAdmin
 
 from ckeditor.widgets import CKEditorWidget
 
-from .models import Category, Tag, Seller, Listing
+from .models import Category, Tag, Seller, Listing, ItemProxy, AutoProxy, ServiceProxy
+
 
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('title',)}
     list_display = ('title', 'slug',)
     search_fields = ('title',)
+
 
 @admin.register(Tag)
 class TagAdmin(admin.ModelAdmin):
@@ -23,37 +25,70 @@ class TagAdmin(admin.ModelAdmin):
 
 class UserAdmin(admin.ModelAdmin):
     search_fields = ('username',)
-    list_display = ('id','username','email',)
+    list_display = ('id', 'username', 'email',)
+
 
 admin.site.unregister(User)
 admin.site.register(User, UserAdmin)
 
+
 @admin.register(Seller)
 class SellerAdmin(admin.ModelAdmin):
-    search_fields = ('user',)
-    list_display = ('user',)
+    search_fields = ('username',)
+    list_display = ('username', 'email')
 
-@admin.register(Listing)
-class ListingAdmin(admin.ModelAdmin):
-    search_fields = ('title','category','seller',)
+
+@admin.register(ItemProxy)
+class ItemProxyAdmin(admin.ModelAdmin):
+    search_fields = ('title', 'category', 'seller',)
     list_display = (
         'title',
         'category',
         'seller',
-        'description',
+        'price',
         'date_created',
         'date_modified',
     )
 
+
+@admin.register(AutoProxy)
+class AutoProxyAdmin(admin.ModelAdmin):
+    search_fields = ('title', 'category', 'seller',)
+    list_display = (
+        'title',
+        'category',
+        'condition',
+        'seller',
+        'price',
+        'date_created',
+    )
+
+
+@admin.register(ServiceProxy)
+class ServiceProxyAdmin(admin.ModelAdmin):
+    search_fields = ('title', 'category', 'seller',)
+    list_display = (
+        'title',
+        'category',
+        'place_type',
+        'seller',
+        'price',
+        'date_created',
+    )
+
+
 class FlatPageAdminForm(forms.ModelForm):
     content = forms.CharField(widget=CKEditorWidget())
+
     class Meta:
         model = FlatPage
         fields = '__all__'
 
+
 class FlatPageAdmin(admin.ModelAdmin):
 
     form = FlatPageAdminForm
+
 
 admin.site.unregister(FlatPage)
 admin.site.register(FlatPage, FlatPageAdmin)

@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block main %}
+    <h2>{{ object.title }}</h2>
+    <ul>
+        <li>Description: {{ object.description }}</li>
+        <li>Category: {{ object.category }}</li>
+        <li>Price: ${{ object.price }}</li>
+        <li>Seller: {{ object.seller.username }}</li>
+        <li>Type: {{ object.place_type }}</li>
+    </ul>
+{% endblock main %}

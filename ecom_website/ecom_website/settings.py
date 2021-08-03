@@ -27,6 +27,11 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+# Maintenance
+MAINTENANCE_MODE = False
+MAINTENANCE_MODE_IGNORE_ADMIN_SITE = True
+MAINTENANCE_MODE_TEMPLATE = '503.html'
+MAINTENANCE_MODE_STATUS_CODE = 503
 
 # Application definition
 
@@ -41,6 +46,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.sites',
     'django.contrib.flatpages',
+    'django_countries',
+    'maintenance_mode',
     'ckeditor',
     'ckeditor_uploader',
     'main',
@@ -55,6 +62,11 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware',
+    'maintenance_mode.middleware.MaintenanceModeMiddleware',
+]
+
+CONTEXT_PROCESSORS = [
+    'maintenance_mode.context_processors.maintenance_mode',
 ]
 
 ROOT_URLCONF = 'ecom_website.urls'
@@ -70,7 +82,11 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'maintenance_mode.context_processors.maintenance_mode',
             ],
+            'builtins': [
+                'main.templatetags.main_tags',
+            ]
         },
     },
 ]
@@ -127,8 +143,8 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+# CKeditor 
 CKEDITOR_UPLOAD_PATH = 'uploads/'
-# CKEDITOR_FILENAME_GENERATOR = 'utils.get_filename'
 CKEDITOR_BASEPATH = '/static/ckeditor/ckeditor/'
 
 # Default primary key field type
