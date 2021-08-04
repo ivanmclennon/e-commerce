@@ -3,9 +3,9 @@ from urllib.parse import urlencode
 
 from django.db.models import QuerySet
 from django.shortcuts import render
-from django.views.generic import ListView, DetailView
+from django.views.generic import ListView, DetailView, UpdateView
 
-from .models import ItemListing, AutoListing, ServiceListing, Listing
+from .models import ItemListing, AutoListing, ServiceListing, Listing, Profile
 
 
 def index(request):
@@ -37,6 +37,10 @@ class BaseListingList(ListView):
         query_params.pop('page', None)
         context['query_params'] = urlencode(query_params)
         return context
+
+
+class ProfileUpdate(UpdateView):
+    model = Profile
 
 
 # item CBVs
