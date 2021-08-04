@@ -10,7 +10,7 @@
             
             {% for tag in obj.tags.all %}
                 <span class="badge bg-primary rounded-pill">
-                    <a class="text-light" href="?tag={{ tag.title }}">
+                    <a class="text-light text-decoration-none" href="?tag={{ tag.title }}">
                         {{ tag.title }}
                     </a>
                 </span>
