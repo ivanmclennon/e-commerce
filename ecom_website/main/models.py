@@ -1,6 +1,5 @@
-from abc import ABC
-
 from django.db import models
+from django.urls import reverse
 from django.contrib.auth.models import User
 
 from django.db.models.signals import pre_save
@@ -168,6 +167,9 @@ class ItemListing(Listing):
         default="WHITE"
     )
 
+    def get_absolute_url(self) -> str:
+        return reverse('item_detail', kwargs={'pk': self.pk})
+
     class Meta:
         verbose_name = 'item'
         verbose_name_plural = 'items'
@@ -206,6 +208,9 @@ class AutoListing(Listing):
     # specify constraints in Form
     mileage = models.PositiveIntegerField(default=0, blank=False)
 
+    def get_absolute_url(self) -> str:
+        return reverse('car_detail', kwargs={'pk': self.pk})
+
     class Meta:
         verbose_name = 'auto'
         verbose_name_plural = 'autos'
@@ -226,6 +231,9 @@ class ServiceListing(Listing):
         choices=PLACE_TYPE_CHOICES,
         default='IRL'
     )
+
+    def get_absolute_url(self) -> str:
+        return reverse('service_detail', kwargs={'pk': self.pk})
 
     class Meta:
         verbose_name = 'service'
