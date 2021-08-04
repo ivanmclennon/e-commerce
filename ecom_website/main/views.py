@@ -5,24 +5,31 @@ from django.db.models import QuerySet
 from django.shortcuts import render
 from django.views.generic import ListView, DetailView
 
-from .models import ItemListing, AutoListing, ServiceListing, Tag
+from .models import ItemListing, AutoListing, ServiceListing, Listing
 
 
 def index(request):
     return render(request, 'index.html')
 
 
-# item CBVs
-class ItemList(ListView):
-    model = ItemListing
-    paginate_by = 3
+class BaseListingList(ListView):
+    """
+    Base ListView class for inheriting
+    by Listing's subclasses' CBVs
 
-    def get_queryset(self) -> QuerySet[ItemListing]:
+    :param model: Listing subclass
+    :param paginate_by: pagination limit
+    """
+
+    model = Listing
+    paginate_by = 10
+
+    def get_queryset(self) -> QuerySet[Listing]:
         if 'tag' in self.request.GET:
-            return ItemListing.objects.filter(
+            return self.model.objects.filter(
                 tags__title=self.request.GET['tag']
             )
-        return ItemListing.objects.all()
+        return self.model.objects.all()
 
     def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
         context = super().get_context_data(**kwargs)
@@ -31,12 +38,19 @@ class ItemList(ListView):
         context['query_params'] = urlencode(query_params)
         return context
 
+
+# item CBVs
+class ItemList(BaseListingList):
+    model = ItemListing
+    paginate_by = 3
+
+
 class ItemDetail(DetailView):
     model = ItemListing
 
 
 # auto CBVs
-class AutoList(ListView):
+class AutoList(BaseListingList):
     model = AutoListing
     paginate_by = 2
 
@@ -46,7 +60,7 @@ class AutoDetail(DetailView):
 
 
 # service CBVs
-class ServiceList(ListView):
+class ServiceList(BaseListingList):
     model = ServiceListing
     paginate_by = 2
 
