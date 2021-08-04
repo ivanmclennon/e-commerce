@@ -1,25 +1,26 @@
 {% load flatpages %}
 {% get_flatpages as flatpages %}
 
-<footer class="footer mt-auto py-2 bg-light">
-    <div class="container py-4" style="color: black;">
+<footer class="p-4 bg-light position-absolute">
+    <div class="container" style="color: black;">
         <div class="row">
             {% for page in flatpages %}
 
-            <div class="col-6">
-                <a href="{{ page.url }}">
-                    <h5>
+            <div class="col-md text-center">
+                <a class="text-decoration-none link-dark" href="{{ page.url }}">
+                    <h6>
                         {{ page.title }}
-                    </h5>
+                    </h6>
                 </a>
             </div>
 
             {% endfor %}
         </div>
         <div class="row">
-            <div class="col-12">
-                All rights reserved, {% now 'Y' %}
+            <div class="col-md mt-1 text-center">
+                All rights reserved &copy; {% now 'Y' %}
             </div>
         </div>
     </div>
+
 </footer>
