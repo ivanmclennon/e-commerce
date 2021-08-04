@@ -7,7 +7,7 @@ from django.contrib.flatpages.admin import FlatPageAdmin
 
 from ckeditor.widgets import CKEditorWidget
 
-from .models import Category, Tag, Seller, Listing, ItemProxy, AutoProxy, ServiceProxy
+from .models import Profile, Category, Tag, Seller, Listing, ItemProxy, AutoProxy, ServiceProxy
 
 
 @admin.register(Category)
@@ -30,6 +30,11 @@ class UserAdmin(admin.ModelAdmin):
 
 admin.site.unregister(User)
 admin.site.register(User, UserAdmin)
+
+@admin.register(Profile)
+class ProfileAdmin(admin.ModelAdmin):
+    search_fields = ('username',)
+    list_display = ('username', 'email')
 
 
 @admin.register(Seller)

@@ -10,6 +10,23 @@ from django_countries.fields import CountryField
 from .signals import unique_slug_generator
 
 
+class Profile(User):
+    """
+    User profile class based on auth.User
+
+    :param birthday: date of birth
+    """
+
+    birthday = models.DateField()
+
+    def __str__(self) -> str:
+        return self.username
+
+    class Meta:
+        verbose_name = 'user_profile'
+        verbose_name_plural = 'user_profiles'
+
+
 class Seller(User):
     """
     Seller class based on auth.User
