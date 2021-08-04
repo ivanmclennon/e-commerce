@@ -2,14 +2,17 @@ from typing import Any, Dict
 from urllib.parse import urlencode
 
 from django.db.models import QuerySet
+from django.http.response import HttpResponseBase
 from django.shortcuts import render
 from django.views.generic import ListView, DetailView, UpdateView
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 from .models import ItemListing, AutoListing, ServiceListing, Listing, Profile
+from .forms import ProfileForm
 
 
 def index(request):
-    return render(request, 'index.html')
+    return render(request, "index.html")
 
 
 class BaseListingList(ListView):
@@ -21,26 +24,25 @@ class BaseListingList(ListView):
     :param paginate_by: pagination limit
     """
 
-    model = Listing
+    model: Listing
     paginate_by = 10
 
     def get_queryset(self) -> QuerySet[Listing]:
-        if 'tag' in self.request.GET:
-            return self.model.objects.filter(
-                tags__title=self.request.GET['tag']
-            )
+        if "tag" in self.request.GET:
+            return self.model.objects.filter(tags__title=self.request.GET["tag"])
         return self.model.objects.all()
 
     def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
         context = super().get_context_data(**kwargs)
         query_params = self.request.GET.copy()
-        query_params.pop('page', None)
-        context['query_params'] = urlencode(query_params)
+        query_params.pop("page", None)
+        context["query_params"] = urlencode(query_params)
         return context
 
 
-class ProfileUpdate(UpdateView):
+class ProfileUpdate(LoginRequiredMixin, UpdateView):
     model = Profile
+    form_class = ProfileForm
 
 
 # item CBVs
