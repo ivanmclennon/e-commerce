@@ -1,9 +1,11 @@
 {% extends "base.html" %}
 
 {% block main %}
+    
     <h2>Services</h2>
+    
     <ul>
-        {% for service in object_list %}
+        {% for service in page_obj %}
             <li>
                 <a href="{% url 'service_detail' service.id %}">
                     {{ service.title }}
@@ -11,4 +13,7 @@
             </li>
         {% endfor %}
     </ul>
+
+    {% include 'main\listview_paginator.html' %}
+
 {% endblock main %}
