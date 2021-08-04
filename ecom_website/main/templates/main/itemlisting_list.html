@@ -4,13 +4,11 @@
     
     <h2>Items</h2>
     
-    <ul>
+    <ul class="list-group list-group-flush my-3">
         {% for item in page_obj %}
-            <li>
-                <a href="{% url 'item_detail' item.id %}">
-                    {{ item.title }}
-                </a>
-            </li>
+            <a class="list-group-item list-group-item-action" href="{% url 'item_detail' item.id %}">
+                {{ item.title }}
+            </a>
         {% endfor %}
     </ul>
 

@@ -4,16 +4,14 @@
     
     <h2>Services</h2>
     
-    <ul>
+    <ul class="list-group list-group-flush my-3">
         {% for service in page_obj %}
-            <li>
-                <a href="{% url 'service_detail' service.id %}">
-                    {{ service.title }}
-                </a>
-            </li>
+            <a class="list-group-item list-group-item-action" href="{% url 'service_detail' service.id %}">
+                {{ service.title }}
+            </a>
         {% endfor %}
     </ul>
 
     {% include 'main\listview_paginator.html' %}
-
+    
 {% endblock main %}
