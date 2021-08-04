@@ -4,13 +4,7 @@
     
     <h2>Cars</h2>
     
-    <ul class="list-group list-group-flush my-3">
-        {% for car in page_obj %}
-            <a class="list-group-item list-group-item-action" href="{% url 'car_detail' car.id %}">
-                {{ car.title }}
-            </a>
-        {% endfor %}
-    </ul>
+    {% include 'main\listview_display.html' %}
 
     {% include 'main\listview_paginator.html' %}
     
