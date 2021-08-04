@@ -23,6 +23,7 @@ class ItemDetail(DetailView):
 # auto CBVs
 class AutoList(ListView):
     model = AutoListing
+    paginate_by = 2
 
 
 class AutoDetail(DetailView):
@@ -32,6 +33,7 @@ class AutoDetail(DetailView):
 # service CBVs
 class ServiceList(ListView):
     model = ServiceListing
+    paginate_by = 2
 
 
 class ServiceDetail(DetailView):
