@@ -2,7 +2,9 @@ from datetime import date
 
 from django import forms
 
-from .models import Seller
+from django_countries.widgets import CountrySelectWidget
+
+from .models import Seller, ItemListing, AutoListing, ServiceListing
 
 
 class SellerForm(forms.ModelForm):
@@ -23,3 +25,29 @@ class SellerForm(forms.ModelForm):
                 years=range(date.today().year - 100, date.today().year - 17)
             )
         }
+
+
+class ListingForm(forms.ModelForm):
+    class Meta:
+        fields = [
+            "title",
+            "description",
+            "category",
+            "price",
+            "tags",
+        ]
+
+
+class ItemForm(forms.ModelForm):
+    """
+    Form for creating/updating ItemListing
+    """
+
+    class Meta(ListingForm.Meta):
+        model = ItemListing
+        fields = [
+            "weight",
+            "made_id",
+            "color",
+        ]
+        widgets = {"made_in": CountrySelectWidget()}
