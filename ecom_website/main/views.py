@@ -47,8 +47,8 @@ class SellerUpdate(LoginRequiredMixin, UpdateView):
     """
 
     model = Seller
-    # form_class = SellerForm
-    fields = ["first_name", "last_name", "email", "birthday"]
+    form_class = SellerForm
+    # fields = ["first_name", "last_name", "email", "birthday"]
     template_name = "main/seller_update.html"
 
     def get_object(self, queryset: Optional[QuerySet] = None):

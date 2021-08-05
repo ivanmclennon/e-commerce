@@ -1,3 +1,5 @@
+from datetime import date
+
 from django import forms
 
 from .models import Seller
@@ -16,3 +18,8 @@ class SellerForm(forms.ModelForm):
             "email",
             "birthday",
         ]
+        widgets = {
+            "birthday": forms.widgets.SelectDateWidget(
+                years=range(date.today().year - 100, date.today().year - 17)
+            )
+        }

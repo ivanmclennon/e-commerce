@@ -18,7 +18,7 @@ class Seller(User):
     :prop count_listings: number of listings published by seller
     """
 
-    birthday = models.DateField(null=True, blank=True)
+    birthday = models.DateField()
 
     itemlisting_set: models.QuerySet
     autolisting_set: models.QuerySet
