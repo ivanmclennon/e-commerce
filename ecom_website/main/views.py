@@ -7,7 +7,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import ListView, DetailView, UpdateView, CreateView
 
 from .models import ItemListing, AutoListing, ServiceListing, Listing, Seller
-from .forms import SellerForm, ListingForm, ItemForm
+from .forms import SellerForm, ItemForm, AutoForm, ServiceForm
 
 
 def index(request):
@@ -48,25 +48,40 @@ class SellerUpdate(LoginRequiredMixin, UpdateView):
 
     model = Seller
     form_class = SellerForm
-    # fields = ["first_name", "last_name", "email", "birthday"]
-    template_name = "main/seller_update.html"
 
     def get_object(self, queryset: Optional[QuerySet] = None):
         return self.model.objects.get(pk=self.request.user.pk)
 
 
 class ListingCreate(LoginRequiredMixin, CreateView):
-        # create main form
-        # create child forms with fields = fields + []
-        # finish this main view
-        # create child views with their forms
-        # form_class = ListingForm
-        pass
+    template_name = "main/base_create_form.html"
 
 
 class ItemCreate(ListingCreate):
     model = ItemListing
     form_class = ItemForm
+
+    def form_valid(self, form):
+        form.instance.seller = Seller.objects.get(pk=self.request.user.pk)
+        return super().form_valid(form)
+
+
+class AutoCreate(ListingCreate):
+    model = AutoListing
+    form_class = AutoForm
+
+    def form_valid(self, form):
+        form.instance.seller = Seller.objects.get(pk=self.request.user.pk)
+        return super().form_valid(form)
+
+
+class ServiceCreate(ListingCreate):
+    model = ServiceListing
+    form_class = ServiceForm
+
+    def form_valid(self, form):
+        form.instance.seller = Seller.objects.get(pk=self.request.user.pk)
+        return super().form_valid(form)
 
 
 # item CBVs

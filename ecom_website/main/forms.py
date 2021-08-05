@@ -27,27 +27,30 @@ class SellerForm(forms.ModelForm):
         }
 
 
-class ListingForm(forms.ModelForm):
+class ItemForm(forms.ModelForm):
     class Meta:
-        fields = [
-            "title",
-            "description",
-            "category",
-            "price",
-            "tags",
-        ]
-
-
-class ItemForm(ListingForm):
-    """
-    Form for creating/updating ItemListing
-    """
-
-    class Meta(ListingForm.Meta):
         model = ItemListing
-        fields = ListingForm.Meta.fields + [
-            "weight",
-            "made_in",
-            "color",
-        ]
-        widgets = {"made_in": CountrySelectWidget()}
+        exclude = ("seller",)
+        widgets = {
+            "made_in": CountrySelectWidget(),
+            "description": forms.widgets.TextInput(),
+        }
+
+
+class AutoForm(forms.ModelForm):
+    class Meta:
+        model = AutoListing
+        exclude = ("seller",)
+        widgets = {
+            "made_in": CountrySelectWidget(),
+            "description": forms.widgets.TextInput(),
+        }
+
+
+class ServiceForm(forms.ModelForm):
+    class Meta:
+        model = ServiceListing
+        exclude = ("seller",)
+        widgets = {
+            "description": forms.widgets.TextInput(),
+        }
