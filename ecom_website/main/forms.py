@@ -7,6 +7,7 @@ class SellerForm(forms.ModelForm):
     """
     Form for SellerUpdate CBV
     """
+
     class Meta:
         model = Seller
         fields = [
