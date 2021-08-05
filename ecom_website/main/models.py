@@ -20,6 +20,10 @@ class Seller(User):
 
     birthday = models.DateField(null=True, blank=True)
 
+    itemlisting_set: models.QuerySet
+    autolisting_set: models.QuerySet
+    servicelisting_set: models.QuerySet
+
     @property
     def count_listings(self) -> int:
         """Count listings published by seller"""
@@ -31,6 +35,9 @@ class Seller(User):
 
     def __str__(self) -> str:
         return self.username
+
+    def get_absolute_url(self) -> str:
+        return reverse("seller_update")
 
     class Meta:
         verbose_name = "seller"
