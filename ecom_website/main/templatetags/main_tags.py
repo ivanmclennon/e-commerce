@@ -18,6 +18,10 @@ def query_remainder(context):
         return '&'+context['query_params']
     return ''
 
+@register.simple_tag(takes_context=True)
+def activate_navlink(context, uri):
+    if uri in context['request'].path:
+        return 'active'
 
 @register.filter(name="reversed")
 @stringfilter

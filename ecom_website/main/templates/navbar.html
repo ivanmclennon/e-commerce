@@ -1,3 +1,5 @@
+{% load main_tags %}
+
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container">
 
@@ -11,13 +13,13 @@
         
         <ul class="navbar-nav ms-auto">
           <li class="nav-item">
-            <a class="nav-link {% if '/items/' in request.path %} active {% endif %}" href="{% url 'items_list' %}">Items</a>
+            <a class="nav-link {% activate_navlink '/items/' %}" href="{% url 'items_list' %}">Items</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link {% if '/cars/' in request.path %} active {% endif %}" href="{% url 'cars_list' %}">Cars</a>
+            <a class="nav-link {% activate_navlink '/cars/' %}" href="{% url 'cars_list' %}">Cars</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link {% if '/services/' in request.path %} active {% endif %}" href="{% url 'services_list' %}">Services</a>
+            <a class="nav-link {% activate_navlink '/services/' %}" href="{% url 'services_list' %}">Services</a>
           </li>
         </ul>
         
