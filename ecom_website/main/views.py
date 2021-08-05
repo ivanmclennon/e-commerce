@@ -21,6 +21,7 @@ class BaseListingList(ListView):
 
     :param model: Listing subclass
     :param paginate_by: pagination limit
+    :param template_name: base template for listviews
     """
 
     model: Listing
@@ -41,6 +42,10 @@ class BaseListingList(ListView):
 
 
 class SellerUpdate(LoginRequiredMixin, UpdateView):
+    """
+    Seller model update CBV from UpdateView
+    """
+
     model = Seller
     # form_class = SellerForm
     fields = ["first_name", "last_name", "email", "birthday"]

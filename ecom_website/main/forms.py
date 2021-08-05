@@ -4,6 +4,9 @@ from .models import Seller
 
 
 class SellerForm(forms.ModelForm):
+    """
+    Form for SellerUpdate CBV
+    """
     class Meta:
         model = Seller
         fields = [
