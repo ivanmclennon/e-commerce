@@ -1,11 +1,11 @@
 from django import forms
 
-from .models import Profile
+from .models import Seller
 
 
-class ProfileForm(forms.ModelForm):
+class SellerForm(forms.ModelForm):
     class Meta:
-        model = Profile
+        model = Seller
         fields = [
             "first_name",
             "last_name",

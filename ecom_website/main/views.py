@@ -6,8 +6,8 @@ from django.db.models import QuerySet
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import ListView, DetailView, UpdateView
 
-from .models import ItemListing, AutoListing, ServiceListing, Listing, Profile
-from .forms import ProfileForm
+from .models import ItemListing, AutoListing, ServiceListing, Listing, Seller
+from .forms import SellerForm
 
 
 def index(request):
@@ -39,10 +39,10 @@ class BaseListingList(ListView):
         return context
 
 
-class ProfileUpdate(LoginRequiredMixin, UpdateView):
-    model = Profile
-    form_class = ProfileForm
-    template_name = "main/profile_update.html"
+class SellerUpdate(LoginRequiredMixin, UpdateView):
+    model = Seller
+    form_class = SellerForm
+    template_name = "main/seller_update.html"
 
     def get_object(self, queryset: Optional[QuerySet] = None):
         return self.request.user

@@ -8,7 +8,7 @@ from .views import (
     ItemDetail,
     AutoDetail,
     ServiceDetail,
-    ProfileUpdate,
+    SellerUpdate,
 )
 
 
@@ -20,5 +20,5 @@ urlpatterns = [
     path("items/<int:pk>", ItemDetail.as_view(), name="item_detail"),
     path("cars/<int:pk>", AutoDetail.as_view(), name="car_detail"),
     path("services/<int:pk>", ServiceDetail.as_view(), name="service_detail"),
-    path("accounts/profile/", ProfileUpdate.as_view(), name="profile_update"),
+    path("accounts/seller/", SellerUpdate.as_view(), name="seller_update"),
 ]
