@@ -25,6 +25,7 @@ class BaseListingList(ListView):
 
     model: Listing
     paginate_by = 10
+    template_name = "main/base_listview.html"
 
     def get_queryset(self) -> QuerySet[Listing]:
         if "tag" in self.request.GET:
@@ -42,7 +43,7 @@ class BaseListingList(ListView):
 class SellerUpdate(LoginRequiredMixin, UpdateView):
     model = Seller
     # form_class = SellerForm
-    fields = ['first_name', 'last_name','email','birthday']
+    fields = ["first_name", "last_name", "email", "birthday"]
     template_name = "main/seller_update.html"
 
     def get_object(self, queryset: Optional[QuerySet] = None):
