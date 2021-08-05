@@ -5,7 +5,10 @@
 {% endblock title %}
 
 {% block main %}
-    <form method="post">
+
+    <h2>{{ seller.username|title }} - update profile</h2>
+
+    <form class="form my-4 px-3" method="post">
         {% csrf_token %}
         {{ form.as_p }}
         <input type="submit" value="Update">

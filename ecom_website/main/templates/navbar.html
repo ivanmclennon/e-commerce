@@ -21,11 +21,12 @@
           <li class="nav-item">
             <a class="nav-link {% activate_navlink '/services/' %}" href="{% url 'services_list' %}">Services</a>
           </li>
+          {% if user.is_authenticated %}
+            <li class="nav-item">
+              <a class="nav-link {% activate_navlink '/accounts/' %}" href="{% url 'seller_update' %}">{{ user.username }}</a>
+            </li>
+          {% endif %}
         </ul>
-        
-        <span class="navbar-text text-muted">
-          Signed in as {{ user.username }}
-        </span>
 
       </div>
     </div>
