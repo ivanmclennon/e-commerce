@@ -1,11 +1,10 @@
-from typing import Any, Dict
+from typing import Any, Dict, Optional
 from urllib.parse import urlencode
 
-from django.db.models import QuerySet
-from django.http.response import HttpResponseBase
 from django.shortcuts import render
-from django.views.generic import ListView, DetailView, UpdateView
+from django.db.models import QuerySet
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views.generic import ListView, DetailView, UpdateView
 
 from .models import ItemListing, AutoListing, ServiceListing, Listing, Profile
 from .forms import ProfileForm
@@ -43,6 +42,10 @@ class BaseListingList(ListView):
 class ProfileUpdate(LoginRequiredMixin, UpdateView):
     model = Profile
     form_class = ProfileForm
+    template_name = "main/profile_update.html"
+
+    def get_object(self, queryset: Optional[QuerySet] = None):
+        return self.request.user
 
 
 # item CBVs
