@@ -38,16 +38,16 @@ class ListingForm(forms.ModelForm):
         ]
 
 
-class ItemForm(forms.ModelForm):
+class ItemForm(ListingForm):
     """
     Form for creating/updating ItemListing
     """
 
     class Meta(ListingForm.Meta):
         model = ItemListing
-        fields = [
+        fields = ListingForm.Meta.fields + [
             "weight",
-            "made_id",
+            "made_in",
             "color",
         ]
         widgets = {"made_in": CountrySelectWidget()}

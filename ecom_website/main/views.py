@@ -4,10 +4,10 @@ from urllib.parse import urlencode
 from django.shortcuts import render
 from django.db.models import QuerySet
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.views.generic import ListView, DetailView, UpdateView
+from django.views.generic import ListView, DetailView, UpdateView, CreateView
 
 from .models import ItemListing, AutoListing, ServiceListing, Listing, Seller
-from .forms import SellerForm
+from .forms import SellerForm, ListingForm, ItemForm
 
 
 def index(request):
@@ -53,6 +53,20 @@ class SellerUpdate(LoginRequiredMixin, UpdateView):
 
     def get_object(self, queryset: Optional[QuerySet] = None):
         return self.model.objects.get(pk=self.request.user.pk)
+
+
+class ListingCreate(LoginRequiredMixin, CreateView):
+        # create main form
+        # create child forms with fields = fields + []
+        # finish this main view
+        # create child views with their forms
+        # form_class = ListingForm
+        pass
+
+
+class ItemCreate(ListingCreate):
+    model = ItemListing
+    form_class = ItemForm
 
 
 # item CBVs

@@ -9,6 +9,7 @@ from .views import (
     AutoDetail,
     ServiceDetail,
     SellerUpdate,
+    ItemCreate,
 )
 
 
@@ -21,4 +22,5 @@ urlpatterns = [
     path("cars/<int:pk>", AutoDetail.as_view(), name="car_detail"),
     path("services/<int:pk>", ServiceDetail.as_view(), name="service_detail"),
     path("accounts/seller/", SellerUpdate.as_view(), name="seller_update"),
+    path("items/add/", ItemCreate.as_view(), name="create_item"),
 ]
