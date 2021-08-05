@@ -1,15 +1,17 @@
-from typing import Any, Dict
+from typing import Any, Dict, Optional
 from urllib.parse import urlencode
 
-from django.db.models import QuerySet
 from django.shortcuts import render
-from django.views.generic import ListView, DetailView
+from django.db.models import QuerySet
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views.generic import ListView, DetailView, UpdateView
 
-from .models import ItemListing, AutoListing, ServiceListing, Listing
+from .models import ItemListing, AutoListing, ServiceListing, Listing, Seller
+from .forms import SellerForm
 
 
 def index(request):
-    return render(request, 'index.html')
+    return render(request, "index.html")
 
 
 class BaseListingList(ListView):
@@ -19,24 +21,38 @@ class BaseListingList(ListView):
 
     :param model: Listing subclass
     :param paginate_by: pagination limit
+    :param template_name: base template for listviews
     """
 
-    model = Listing
+    model: Listing
     paginate_by = 10
+    template_name = "main/base_listview.html"
 
     def get_queryset(self) -> QuerySet[Listing]:
-        if 'tag' in self.request.GET:
-            return self.model.objects.filter(
-                tags__title=self.request.GET['tag']
-            )
+        if "tag" in self.request.GET:
+            return self.model.objects.filter(tags__title=self.request.GET["tag"])
         return self.model.objects.all()
 
     def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
         context = super().get_context_data(**kwargs)
         query_params = self.request.GET.copy()
-        query_params.pop('page', None)
-        context['query_params'] = urlencode(query_params)
+        query_params.pop("page", None)
+        context["query_params"] = urlencode(query_params)
         return context
+
+
+class SellerUpdate(LoginRequiredMixin, UpdateView):
+    """
+    Seller model update CBV from UpdateView
+    """
+
+    model = Seller
+    form_class = SellerForm
+    # fields = ["first_name", "last_name", "email", "birthday"]
+    template_name = "main/seller_update.html"
+
+    def get_object(self, queryset: Optional[QuerySet] = None):
+        return self.model.objects.get(pk=self.request.user.pk)
 
 
 # item CBVs

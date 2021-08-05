@@ -1,11 +1,17 @@
 {% extends "base.html" %}
 
+{% load main_tags %}
+
+{% block title %}
+    {% dynamic_title %}
+{% endblock title %}
+
 {% block main %}
     
-    <h2>Services</h2>
-    
+    <h2>{% dynamic_title %}</h2>
+
     {% include 'main\listview_display.html' %}
 
     {% include 'main\listview_paginator.html' %}
-    
+
 {% endblock main %}
