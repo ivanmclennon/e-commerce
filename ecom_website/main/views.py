@@ -57,6 +57,28 @@ class ListingCreate(LoginRequiredMixin, CreateView):
     template_name = "main/base_create_form.html"
 
 
+class ListingUpdate(LoginRequiredMixin, UpdateView):
+    template_name = "main/base_update_form.html"
+
+
+class ItemUpdate(ListingUpdate):
+
+    model = ItemListing
+    form_class = ItemForm
+
+
+class AutoUpdate(ListingUpdate):
+
+    model = AutoListing
+    form_class = AutoForm
+
+
+class ServiceUpdate(ListingUpdate):
+
+    model = ServiceListing
+    form_class = ServiceForm
+
+
 class ItemCreate(ListingCreate):
     model = ItemListing
     form_class = ItemForm
