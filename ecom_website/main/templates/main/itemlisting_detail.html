@@ -1,5 +1,9 @@
 {% extends "base.html" %}
 
+{% block title %}
+    Item - {{ object.title }}
+{% endblock title %}
+
 {% block main %}
     <h2>{{ object.title }}</h2>
     <ul>
@@ -11,4 +15,5 @@
         <li>Color: {{ object.color }}</li>
         <li>Condition: {{ object.condition }}</li>
     </ul>
+    <a class="btn btn-primary" href="{{ request.path|add:'/edit/' }}">Edit Listing</a>
 {% endblock main %}
