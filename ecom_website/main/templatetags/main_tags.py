@@ -2,9 +2,19 @@ from datetime import datetime as dt
 
 from django import template
 from django.template.defaultfilters import stringfilter
+from django.contrib.auth.models import User
+
+from main.models import Seller
 
 
 register = template.Library()
+
+
+@register.simple_tag(takes_context=True)
+def seller_from_user(context):
+    user: User = context["user"]
+    if user.is_authenticated:
+        return Seller.objects.get(username=user.username)
 
 
 @register.simple_tag
