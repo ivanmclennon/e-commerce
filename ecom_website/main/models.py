@@ -19,6 +19,10 @@ class Seller(User):
     """
 
     birthday = models.DateField()
+    avatar = models.ImageField(
+        upload_to="main/sellers",
+        default="main/sellers/NO_AVATAR.png",
+    )
 
     itemlisting_set: models.QuerySet
     autolisting_set: models.QuerySet
