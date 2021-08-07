@@ -8,12 +8,82 @@ Paste this command in shell:
 Run needed functions.
 
 """
+import json
+from typing import Dict, List, Optional, Tuple, Type
+from datetime import date
 
-from typing import List
 from django.test import TestCase
 from django.db.models import Model
 
-from .models import Seller, Tag, Category, Listing, ItemListing, AutoListing, ServiceListing
+from .models import (
+    Seller,
+    Tag,
+    Category,
+    ItemListing,
+    AutoListing,
+    ServiceListing,
+)
+
+
+class DumpDB:
+
+    SELLER_ATTRS = (
+        "username",
+        "first_name",
+        "last_name",
+        "email",
+        "birthday",
+    )
+
+    TAG_ATTRS = ("title",)
+
+    CATEGORY_ATTRS = ("title",)
+
+    LISTING_ATTRS = (
+        "title",
+        "description",
+        "category",
+        "seller",
+        "tags",
+        "price",
+    )
+
+    ITEM_ATTRS = LISTING_ATTRS + (
+        "weight",
+        "made_in",
+        "color",
+    )
+
+    AUTO_ATTRS = LISTING_ATTRS + (
+        "weight",
+        "made_in",
+        "color",
+        "condition",
+        "mileage",
+    )
+
+    SERVICE_ATTRS = LISTING_ATTRS + ("place_type",)
+
+    ATTRS_MAP = {
+        "Seller": SELLER_ATTRS,
+        "Tag": TAG_ATTRS,
+        "Category": CATEGORY_ATTRS,
+        "ItemListing": ITEM_ATTRS,
+        "AutoListing": AUTO_ATTRS,
+        "ServiceListing": SERVICE_ATTRS,
+    }
+
+    def __init__(self, model_class: Type[Model]) -> None:
+        self.model_class = model_class
+        self.model_attrs = self.ATTRS_MAP[model_class.__name__]
+
+    def dump(self):
+        model_objects = self.model_class.objects.all()
+        objects_list = [
+            {attr: getattr(obj, attr, "") for attr in self.model_attrs}
+            for obj in self.model_class.objects.all()
+        ]
+        print(objects_list)
 
 
 def create_model_objects(model_class: Model, kw_list: List[dict]) -> None:
