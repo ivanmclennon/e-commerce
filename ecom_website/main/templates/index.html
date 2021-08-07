@@ -2,6 +2,8 @@
 
 {% load main_tags %}
 
+{% load thumbnail %}
+
 {% block title %}
     Homepage
 {% endblock %}
@@ -18,5 +20,10 @@
             <h2>Server time is {{ the_time }}.</h2>
         </div>
     </div>
+
+    {% seller_from_user as seller %}
+    {% thumbnail seller.avatar "100x100" crop="center" as im %}
+        <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}">
+    {% endthumbnail %}
 
 {% endblock main %}
