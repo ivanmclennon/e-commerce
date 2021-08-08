@@ -203,6 +203,17 @@ class AutoListing(Listing):
         verbose_name_plural = "autos"
 
 
+class Picture(models.Model):
+    image = models.ImageField()
+    car = models.ForeignKey(
+        to=AutoListing, on_delete=models.CASCADE, related_name="%(class)s_set"
+    )
+
+    class Meta:
+        verbose_name = "picture"
+        verbose_name_plural = "pictures"
+
+
 class ServiceListing(Listing):
     """
     Service listing model
