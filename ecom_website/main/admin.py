@@ -7,7 +7,16 @@ from django.contrib.flatpages.admin import FlatPageAdmin
 
 from ckeditor.widgets import CKEditorWidget
 
-from .models import Category, Tag, Seller, Listing, ItemProxy, AutoProxy, ServiceProxy
+from .models import (
+    Category,
+    Picture,
+    Tag,
+    Seller,
+    Listing,
+    ItemProxy,
+    AutoProxy,
+    ServiceProxy,
+)
 
 
 @admin.register(Category)
@@ -77,6 +86,11 @@ class AutoProxyAdmin(admin.ModelAdmin):
         "price",
         "date_created",
     )
+
+
+@admin.register(Picture)
+class PictureAdmin(admin.ModelAdmin):
+    pass
 
 
 @admin.register(ServiceProxy)
