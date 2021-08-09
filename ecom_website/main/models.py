@@ -8,6 +8,7 @@ from django.dispatch import receiver
 from django_countries.fields import CountryField
 
 from .signals import unique_slug_generator
+from .validators import age_validator
 
 
 class Seller(User):
@@ -18,7 +19,7 @@ class Seller(User):
     :prop count_listings: number of listings published by seller
     """
 
-    birthday = models.DateField()
+    birthday = models.DateField(validators=(age_validator,))
     avatar = models.ImageField(
         upload_to="main/sellers",
         default="main/sellers/NO_AVATAR.png",
