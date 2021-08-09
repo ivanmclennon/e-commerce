@@ -1,10 +1,11 @@
 from datetime import date
 
 from django import forms
+from django.forms.models import inlineformset_factory
 
 from django_countries.widgets import CountrySelectWidget
 
-from .models import Seller, ItemListing, AutoListing, ServiceListing
+from .models import Picture, Seller, ItemListing, AutoListing, ServiceListing
 
 
 class SellerForm(forms.ModelForm):
@@ -45,6 +46,9 @@ class AutoForm(forms.ModelForm):
             "made_in": CountrySelectWidget(),
             "description": forms.widgets.TextInput(),
         }
+
+
+ImageFormset = inlineformset_factory(AutoListing, Picture, fields=("image",), extra=1)
 
 
 class ServiceForm(forms.ModelForm):

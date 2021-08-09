@@ -8,10 +8,24 @@
 
 {% block main %}
 
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+
     <h2>New Listing: {% dynamic_title %}</h2>
 
-    <form class="form my-4 px-3" method="post">
+    <form class="form my-4 px-3" enctype="multipart/form-data" method="post">
         {% csrf_token %}
+        {{ formset.management_form }}
+        {% for form in formset %}
+        
+            {{ form.as_p }}
+
+        {% endfor %}
         {{ form.as_p }}
         <input class="btn btn-primary" type="submit" value="Add Listing">
     </form>

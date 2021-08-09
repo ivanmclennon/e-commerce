@@ -203,6 +203,20 @@ class AutoListing(Listing):
         verbose_name_plural = "autos"
 
 
+class Picture(models.Model):
+    image = models.ImageField(upload_to="main/cars", default="main/cars/NO_IMAGE.jpg")
+    car = models.ForeignKey(
+        to=AutoListing, on_delete=models.CASCADE, related_name="%(class)s_set"
+    )
+
+    def __str__(self) -> str:
+        return self.image.path
+
+    class Meta:
+        verbose_name = "picture"
+        verbose_name_plural = "pictures"
+
+
 class ServiceListing(Listing):
     """
     Service listing model

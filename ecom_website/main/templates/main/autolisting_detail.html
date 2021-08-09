@@ -1,11 +1,22 @@
 {% extends "base.html" %}
 
+{% load thumbnail %}
+
 {% block title %}
     Car - {{ object.title }}
 {% endblock title %}
 
 {% block main %}
     <h2>{{ object.title }}</h2>
+
+    {% if picture %}
+        <div class="rounded mx-auto d-block">
+            {% thumbnail picture "200x200" crop="center" as im %}
+                <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}" class="img-thumbnail mr-3">
+            {% endthumbnail %}
+        </div>
+    {% endif %}
+
     <ul>
         <li>Description: {{ object.description }}</li>
         <li>Category: {{ object.category }}</li>
