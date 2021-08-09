@@ -204,7 +204,7 @@ class AutoListing(Listing):
 
 
 class Picture(models.Model):
-    image = models.ImageField()
+    image = models.ImageField(upload_to="main/cars", default="main/cars/NO_IMAGE.jpg")
     car = models.ForeignKey(
         to=AutoListing, on_delete=models.CASCADE, related_name="%(class)s_set"
     )
