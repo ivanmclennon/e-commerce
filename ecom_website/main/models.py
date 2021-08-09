@@ -209,6 +209,9 @@ class Picture(models.Model):
         to=AutoListing, on_delete=models.CASCADE, related_name="%(class)s_set"
     )
 
+    def __str__(self) -> str:
+        return self.image.path
+
     class Meta:
         verbose_name = "picture"
         verbose_name_plural = "pictures"

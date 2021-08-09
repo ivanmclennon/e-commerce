@@ -18,7 +18,7 @@
 
     <h2>New Listing: {% dynamic_title %}</h2>
 
-    <form class="form my-4 px-3" method="post">
+    <form class="form my-4 px-3" enctype="multipart/form-data" method="post">
         {% csrf_token %}
         {{ formset.management_form }}
         {% for form in formset %}

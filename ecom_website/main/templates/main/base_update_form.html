@@ -10,9 +10,15 @@
 
     <h2>Edit Listing: {% dynamic_title %}</h2>
 
-    <form class="form my-4 px-3" method="post">
+    <form class="form my-4 px-3" enctype="multipart/form-data" method="post">
         {% csrf_token %}
+        {{ formset.management_form }}
+        {% for form in formset %}
+        
+            {{ form.as_p }}
+
+        {% endfor %}
         {{ form.as_p }}
-        <input class="btn btn-primary" type="submit" value="Update">
+        <input class="btn btn-primary" type="submit" value="Edit Listing">
     </form>
 {% endblock main %}

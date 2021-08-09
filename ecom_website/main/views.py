@@ -5,6 +5,7 @@ from django.http.response import HttpResponse, HttpResponseRedirect
 
 from django.shortcuts import render
 from django.contrib import messages
+from django.shortcuts import get_object_or_404
 from django.db.models import QuerySet
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import ListView, DetailView, UpdateView, CreateView
@@ -70,12 +71,6 @@ class ItemUpdate(ListingUpdate):
     form_class = ItemForm
 
 
-class AutoUpdate(ListingUpdate):
-
-    model = AutoListing
-    form_class = AutoForm
-
-
 class ServiceUpdate(ListingUpdate):
 
     model = ServiceListing
@@ -89,33 +84,6 @@ class ItemCreate(ListingCreate):
     def form_valid(self, form):
         form.instance.seller = Seller.objects.get(pk=self.request.user.pk)
         return super().form_valid(form)
-
-
-class AutoCreate(ListingCreate):
-    model = AutoListing
-    form_class = AutoForm
-
-    def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
-        context = super().get_context_data(**kwargs)
-        if self.request.POST:
-            context['formset'] = ImageFormset(self.request.POST, self.request.FILES)
-        else:
-            context['formset'] = ImageFormset()
-        return context
-
-    def form_valid(self, form: AutoForm) -> HttpResponseRedirect:
-        form.instance.seller = Seller.objects.get(pk=self.request.user.pk)
-        context = self.get_context_data()
-        formset: ImageFormset = context['formset']
-        if form.is_valid() and formset.is_valid():
-            self.object: AutoListing = form.save()
-            formset.instance = self.object
-            formset.save()
-            messages.add_message(self.request, messages.SUCCESS, "Listing posted!")
-            return HttpResponseRedirect(self.object.get_absolute_url())
-        messages.add_message(self.request, messages.ERROR, "Invalid data")
-        return HttpResponseRedirect('create_car')
-        
 
 
 class ServiceCreate(ListingCreate):
@@ -146,13 +114,68 @@ class AutoList(BaseListingList):
 class AutoDetail(DetailView):
     model = AutoListing
 
+    def get_object(self):
+        self.object = get_object_or_404(AutoListing, id=self.kwargs["pk"])
+        return self.object
+
     def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
         context = super().get_context_data(**kwargs)
         try:
-            pic = Picture.objects.filter(car=AutoListing.objects.get(id=self.kwargs['pk'])).last()
+            pic = AutoListing.objects.get(pk=self.kwargs["pk"]).picture_set.last()
         except:
             pic = None
-        context['picture'] = pic
+        context["picture"] = pic
+        return context
+
+
+class AutoCreate(ListingCreate):
+    model = AutoListing
+    form_class = AutoForm
+
+    def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
+        context = super().get_context_data(**kwargs)
+        context["formset"] = ImageFormset()
+        return context
+
+    def form_valid(self, form: AutoForm) -> HttpResponseRedirect:
+        form.instance.seller = Seller.objects.get(pk=self.request.user.pk)
+        if form.is_valid():
+            self.object: AutoListing = form.save()
+            messages.add_message(self.request, messages.SUCCESS, "Listing posted!")
+
+        formset = ImageFormset(
+            self.request.POST, self.request.FILES, instance=self.object
+        )
+        if formset.is_valid():
+            formset.save()
+        return HttpResponseRedirect(self.object.get_absolute_url())
+
+
+class AutoUpdate(ListingUpdate):
+
+    model = AutoListing
+    form_class = AutoForm
+
+    def get_object(self, queryset=None) -> AutoListing:
+        return get_object_or_404(AutoListing, pk=self.kwargs["pk"])
+
+    def form_valid(self, form: AutoForm) -> HttpResponse:
+        form.instance.seller = Seller.objects.get(pk=self.request.user.pk)
+        formset = ImageFormset(
+            self.request.POST, self.request.FILES, instance=self.get_object()
+        )
+        if formset.is_valid():
+            formset.save()
+        return super().form_valid(form)
+
+    def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
+        context = super().get_context_data(**kwargs)
+        context["formset"] = ImageFormset()
+        try:
+            pic = AutoListing.objects.get(pk=self.kwargs["pk"]).picture_set.last()
+        except:
+            pic = None
+        context["picture"] = pic
         return context
 
 

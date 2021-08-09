@@ -14,7 +14,12 @@ register = template.Library()
 def seller_from_user(context):
     user: User = context["user"]
     if user.is_authenticated:
-        return Seller.objects.get(username=user.username)
+        try:
+            seller = Seller.objects.get(username=user.username)
+        except:
+            seller = None
+        return seller
+    return None
 
 
 @register.simple_tag
