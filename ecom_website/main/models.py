@@ -152,7 +152,7 @@ class ItemListing(Listing):
     Unspecified general item listing class
 
     :param weight: weight in kg 0.01
-    :param made_in: manufacturer country
+    :param made_in: manufacturer country from django-countries
     :param color: item color from COLOR_CHOICES
     """
 
@@ -175,10 +175,11 @@ class AutoListing(Listing):
     Automobile listing model
 
     :param weight: weight in kg
-    :param made_in: manufacturer country
+    :param made_in: manufacturer country from django-counties
     :param color: item color from COLOR_CHOICES
     :param condition: new/used
     :param mileage: distance traveled in kilometers
+    :param picture_set: queryset of assigned Picture images
     """
 
     # specify validation constraints in the Form
@@ -195,6 +196,8 @@ class AutoListing(Listing):
     condition = models.CharField(max_length=8, choices=CONDITION_CHOICES, default="NEW")
     # specify constraints in Form
     mileage = models.PositiveIntegerField(default=0, blank=False)
+
+    picture_set: models.QuerySet
 
     def get_absolute_url(self) -> str:
         return reverse("car_detail", kwargs={"pk": self.pk})
