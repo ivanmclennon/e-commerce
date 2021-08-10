@@ -1,6 +1,7 @@
 from django.db import models
 from django.urls import reverse
 from django.contrib.auth.models import User
+from django.core.validators import MinValueValidator, DecimalValidator
 
 from django.db.models.signals import pre_save
 from django.dispatch import receiver
@@ -157,7 +158,12 @@ class ItemListing(Listing):
     """
 
     # specify validation constraints in the Form
-    weight = models.FloatField()
+    weight = models.FloatField(
+        validators=(
+            MinValueValidator(limit_value=0.01, message="Minimal weight is 0.01 kg"),
+            DecimalValidator(max_digits=4, decimal_places=2),
+        )
+    )
     # use CountrySelectWidget in Form
     made_in = CountryField(blank_label="(select country)")
     color = models.CharField(max_length=16, choices=COLOR_CHOICES, default="WHITE")
@@ -183,7 +189,12 @@ class AutoListing(Listing):
     """
 
     # specify validation constraints in the Form
-    weight = models.FloatField()
+    weight = models.FloatField(
+        validators=(
+            MinValueValidator(limit_value=0.01, message="Minimal weight is 0.01 kg"),
+            DecimalValidator(max_digits=4, decimal_places=2),
+        )
+    )
     # use CountrySelectWidget in Form
     made_in = CountryField(blank_label="(select country)")
     color = models.CharField(max_length=16, choices=COLOR_CHOICES, default="WHITE")
