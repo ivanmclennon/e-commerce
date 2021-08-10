@@ -8,7 +8,7 @@ from django.dispatch import receiver
 from django_countries.fields import CountryField
 
 from .signals import unique_slug_generator
-from .validators import age_validator
+from .validators import age_validator, weight_validator
 
 
 class Seller(User):
@@ -157,7 +157,7 @@ class ItemListing(Listing):
     """
 
     # specify validation constraints in the Form
-    weight = models.FloatField()
+    weight = models.FloatField(validators=(weight_validator,))
     # use CountrySelectWidget in Form
     made_in = CountryField(blank_label="(select country)")
     color = models.CharField(max_length=16, choices=COLOR_CHOICES, default="WHITE")
@@ -183,7 +183,7 @@ class AutoListing(Listing):
     """
 
     # specify validation constraints in the Form
-    weight = models.FloatField()
+    weight = models.FloatField(validators=(weight_validator,))
     # use CountrySelectWidget in Form
     made_in = CountryField(blank_label="(select country)")
     color = models.CharField(max_length=16, choices=COLOR_CHOICES, default="WHITE")
