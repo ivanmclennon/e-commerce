@@ -1,9 +1,9 @@
-from datetime import date, timedelta
+from datetime import date
 
 from django.core.exceptions import ValidationError
 
 
-def age_validator(birthday: date):
+def age_validator(birthday: date) -> None:
     today = date.today()
     age = today.year - birthday.year
     if (today.month < birthday.month) or (
