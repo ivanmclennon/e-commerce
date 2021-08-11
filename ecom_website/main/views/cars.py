@@ -11,61 +11,65 @@ from .base import ListingList, ListingDetail, ListingCreate, ListingUpdate
 
 
 class AutoList(ListingList):
-    model: AutoListing
+    model = AutoListing
     paginate_by: int = 2
 
 
 class AutoDetail(ListingDetail):
-    model: AutoListing
+    model = AutoListing
 
-    def get_object(self, queryset: Optional[QuerySet] = None) -> AutoListing:
-        self.object = get_object_or_404(AutoListing, id=self.kwargs["pk"])
-        return self.object
+    # def get_object(self, queryset: Optional[QuerySet] = None) -> AutoListing:
+    #     self.object = get_object_or_404(AutoListing, id=self.kwargs["pk"])
+    #     return self.object
 
     def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
+        """
+        Provide last picture to context if car has pictures, otherwise None
+        """
         context = super().get_context_data(**kwargs)
-        try:
-            pic = AutoListing.objects.get(pk=self.kwargs["pk"]).picture_set.last()
-        except:
-            pic = None
-        context["picture"] = pic
+        context["picture"] = self.get_object().picture_set.last()
         return context
 
 
 class AutoCreate(ListingCreate):
-    model: AutoListing
+    model = AutoListing
     form_class = AutoForm
 
     def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
+        """
+        Provides empty formset to context on a GET request
+        """
         context = super().get_context_data(**kwargs)
         context["formset"] = ImageFormset()
         return context
 
     def form_valid(self, form: AutoForm) -> HttpResponse:
+        """
+        Save car object tied to seller,
+        """
         form.instance.seller = Seller.objects.get(pk=self.request.user.pk)
         if form.is_valid():
-            self.object: AutoListing = form.save()
+            car_object: AutoListing = form.save()
             messages.add_message(self.request, messages.SUCCESS, "Listing posted!")
 
-        formset = ImageFormset(
-            self.request.POST, self.request.FILES, instance=self.object
-        )
-        if formset.is_valid():
-            formset.save()
+            formset = ImageFormset(
+                self.request.POST, self.request.FILES, instance=car_object
+            )
+            if formset.is_valid():
+                formset.save()
         return super().form_valid(form)
 
 
 class AutoUpdate(ListingUpdate):
 
-    model: AutoListing
+    model = AutoListing
     form_class = AutoForm
 
-    def get_object(self, queryset: Optional[QuerySet] = None) -> AutoListing:
-        self.object = get_object_or_404(AutoListing, id=self.kwargs["pk"])
-        return self.object
+    # def get_object(self, queryset: Optional[QuerySet] = None) -> AutoListing:
+    #     self.object = get_object_or_404(AutoListing, id=self.kwargs["pk"])
+    #     return self.object
 
     def form_valid(self, form: AutoForm) -> HttpResponse:
-        form.instance.seller = Seller.objects.get(pk=self.request.user.pk)
         formset = ImageFormset(
             self.request.POST, self.request.FILES, instance=self.get_object()
         )
@@ -75,10 +79,5 @@ class AutoUpdate(ListingUpdate):
 
     def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
         context = super().get_context_data(**kwargs)
-        context["formset"] = ImageFormset()
-        try:
-            pic = AutoListing.objects.get(pk=self.kwargs["pk"]).picture_set.last()
-        except:
-            pic = None
-        context["picture"] = pic
+        context["formset"] = ImageFormset(instance=self.get_object())
         return context
