@@ -1,4 +1,4 @@
-from typing import Any, Dict
+from typing import Any, Dict, List
 from urllib.parse import urlencode
 from django.http.response import HttpResponse
 
@@ -33,10 +33,13 @@ class ListingList(ListView):
     def get_queryset(self) -> QuerySet[Listing]:
         """
         Filters by tag if "tag" is in query_params.
+        Order by 'date_created'
         """
         if "tag" in self.request.GET:
-            return self.model.objects.filter(tags__title=self.request.GET["tag"])
-        return self.model.objects.all()
+            return self.model.objects.filter(
+                tags__title=self.request.GET["tag"]
+            ).order_by("date_created")
+        return self.model.objects.all().order_by("date_created")
 
     def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
         """
