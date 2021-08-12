@@ -5,8 +5,6 @@ from unidecode import unidecode as ud
 
 from django.utils.text import slugify
 
-from ecom_website.main.models import Category
-
 
 def random_string_generator(
     size: int = 10, chars: str = string.ascii_lowercase + string.digits
@@ -20,7 +18,7 @@ def random_string_generator(
     return "".join(random.choice(chars) for _ in range(size))
 
 
-def unique_slug_generator(instance: Category, new_slug: str = None) -> str:
+def unique_slug_generator(instance, new_slug: str = None) -> str:
     """
     Returns unique slug for Category instance.
 
