@@ -1,9 +1,7 @@
-from typing import Any, Dict, Optional
+from typing import Any, Dict
 
 from django.contrib import messages
-from django.db.models import QuerySet
-from django.shortcuts import get_object_or_404
-from django.http.response import HttpResponse, HttpResponseRedirect
+from django.http.response import HttpResponse
 
 from main.models import AutoListing, Seller
 from main.forms import AutoForm, ImageFormset
@@ -64,10 +62,6 @@ class AutoUpdate(ListingUpdate):
 
     model = AutoListing
     form_class = AutoForm
-
-    # def get_object(self, queryset: Optional[QuerySet] = None) -> AutoListing:
-    #     self.object = get_object_or_404(AutoListing, id=self.kwargs["pk"])
-    #     return self.object
 
     def form_valid(self, form: AutoForm) -> HttpResponse:
         formset = ImageFormset(
