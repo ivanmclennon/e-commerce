@@ -15,7 +15,7 @@ class SellerUpdate(LoginRequiredMixin, UpdateView):
 
     model = Seller
     form_class = SellerForm
-    login_url = "/admin/login"
+    login_url = "/accounts/login"
     redirect_field_name = "redirect_to"
 
     def get_object(self, queryset: Optional[QuerySet] = None) -> Seller:
