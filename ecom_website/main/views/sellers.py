@@ -13,7 +13,7 @@ class SellerUpdate(LoginRequiredMixin, UpdateView):
     UpdateView for updating Seller's information
     """
 
-    model: Seller
+    model = Seller
     form_class = SellerForm
 
     def get_object(self, queryset: Optional[QuerySet] = None) -> Seller:
