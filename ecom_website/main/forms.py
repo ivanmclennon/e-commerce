@@ -11,6 +11,7 @@ from .models import Picture, Seller, ItemListing, AutoListing, ServiceListing
 class SellerForm(forms.ModelForm):
     """
     Form for SellerUpdate CBV
+    Uses widget for selecting birthday dates within last 100 years
     """
 
     class Meta:
@@ -29,6 +30,11 @@ class SellerForm(forms.ModelForm):
 
 
 class ItemForm(forms.ModelForm):
+    """
+    Form for ItemListing CBVs
+    Excluded seller and widget for country
+    """
+
     class Meta:
         model = ItemListing
         exclude = ("seller",)
@@ -39,6 +45,11 @@ class ItemForm(forms.ModelForm):
 
 
 class AutoForm(forms.ModelForm):
+    """
+    Form for AutoListing CBVs
+    Excluded seller and widget for country
+    """
+
     class Meta:
         model = AutoListing
         exclude = ("seller",)
@@ -48,10 +59,15 @@ class AutoForm(forms.ModelForm):
         }
 
 
+# inline formset for adding/editing Picture objects tied to AutoListing
 ImageFormset = inlineformset_factory(AutoListing, Picture, fields=("image",), extra=1)
 
 
 class ServiceForm(forms.ModelForm):
+    """
+    Form for ServiceListing CBVs
+    """
+
     class Meta:
         model = ServiceListing
         exclude = ("seller",)
