@@ -1,3 +1,5 @@
+from datetime import date
+
 from django.db import models
 from django.urls import reverse
 from django.contrib.auth.models import User
@@ -19,7 +21,7 @@ class Seller(User):
     :prop count_listings: number of listings published by seller
     """
 
-    birthday = models.DateField(validators=(age_validator,))
+    birthday = models.DateField(default=date(2000, 1, 1), validators=(age_validator,))
     avatar = models.ImageField(
         upload_to="main/sellers",
         default="main/sellers/NO_AVATAR.png",
