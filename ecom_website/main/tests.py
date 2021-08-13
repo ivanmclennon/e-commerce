@@ -8,12 +8,81 @@ Paste this command in shell:
 Run needed functions.
 
 """
+from typing import List, Type
+from datetime import date
 
-from typing import List
 from django.test import TestCase
 from django.db.models import Model
 
-from .models import Seller, Tag, Category, Listing, ItemListing, AutoListing, ServiceListing
+from .models import (
+    Seller,
+    Tag,
+    Category,
+    ItemListing,
+    AutoListing,
+    ServiceListing,
+)
+
+
+class DumpDB:
+
+    SELLER_ATTRS = (
+        "username",
+        "first_name",
+        "last_name",
+        "email",
+        "birthday",
+    )
+
+    TAG_ATTRS = ("title",)
+
+    CATEGORY_ATTRS = ("title",)
+
+    LISTING_ATTRS = (
+        "title",
+        "description",
+        "category",
+        "seller",
+        "tags",
+        "price",
+    )
+
+    ITEM_ATTRS = LISTING_ATTRS + (
+        "weight",
+        "made_in",
+        "color",
+    )
+
+    AUTO_ATTRS = LISTING_ATTRS + (
+        "weight",
+        "made_in",
+        "color",
+        "condition",
+        "mileage",
+    )
+
+    SERVICE_ATTRS = LISTING_ATTRS + ("place_type",)
+
+    ATTRS_MAP = {
+        "Seller": SELLER_ATTRS,
+        "Tag": TAG_ATTRS,
+        "Category": CATEGORY_ATTRS,
+        "ItemListing": ITEM_ATTRS,
+        "AutoListing": AUTO_ATTRS,
+        "ServiceListing": SERVICE_ATTRS,
+    }
+
+    def __init__(self, model_class: Type[Model]) -> None:
+        self.model_class = model_class
+        self.model_attrs = self.ATTRS_MAP[model_class.__name__]
+
+    def dump(self):
+        model_objects = self.model_class.objects.all()
+        objects_list = [
+            {attr: getattr(obj, attr, "") for attr in self.model_attrs}
+            for obj in self.model_class.objects.all()
+        ]
+        print(objects_list)
 
 
 def create_model_objects(model_class: Model, kw_list: List[dict]) -> None:
@@ -25,12 +94,31 @@ def create_model_objects(model_class: Model, kw_list: List[dict]) -> None:
 
 def create_independent_models():
     sellers_kwargs = [
-        {"username": "user1", "password": "123456", "email": "user1@example.com"},
-        {"username": "user2", "password": "123456", "email": "user2@example.com"},
-        {"username": "user3", "password": "123456", "email": "user3@example.com"},
-        {"username": "user4", "password": "123456", "email": "user4@example.com"},
+        {
+            "username": "user1",
+            "email": "user1@example.com",
+            "birthday": date(2000, 1, 1),
+        },
+        {
+            "username": "user2",
+            "email": "user2@example.com",
+            "birthday": date(2000, 1, 1),
+        },
+        {
+            "username": "user3",
+            "email": "user3@example.com",
+            "birthday": date(2000, 1, 1),
+        },
+        {
+            "username": "user4",
+            "email": "user4@example.com",
+            "birthday": date(2000, 1, 1),
+        },
     ]
     create_model_objects(Seller, sellers_kwargs)
+    for seller in Seller.objects.all():
+        seller.set_password("123456")
+        seller.save()
 
     tags_kwargs = [
         {"title": "cheap"},
@@ -38,7 +126,6 @@ def create_independent_models():
         {"title": "used"},
         {"title": "delivery"},
         {"title": "credit"},
-        {"title": "car"},
     ]
     create_model_objects(Tag, tags_kwargs)
 
@@ -98,6 +185,26 @@ def create_default_items():
             "made_in": "DEU",
             "price": 150,
         },
+        {
+            "title": "Smartphone",
+            "description": "lorem ipsum",
+            "category": Category.objects.get(title="electronics"),
+            "seller": Seller.objects.get(username="user4"),
+            "weight": 0.15,
+            "color": "BLUE",
+            "made_in": "CHN",
+            "price": 500,
+        },
+        {
+            "title": "Pizza knife",
+            "description": "lorem ipsum",
+            "category": Category.objects.get(title="home and garden"),
+            "seller": Seller.objects.get(username="user4"),
+            "weight": 0.1,
+            "color": "RED",
+            "made_in": "ITA",
+            "price": 20,
+        },
     ]
     create_model_objects(ItemListing, items_kwargs)
 
@@ -149,6 +256,30 @@ def create_default_autos():
             "color": "RED",
             "made_in": "FRA",
             "price": 5000,
+            "condition": "NEW",
+            "mileage": 0,
+        },
+        {
+            "title": "Huyndai Solaris",
+            "description": "lorem ipsum",
+            "category": Category.objects.get(title="vehicles"),
+            "seller": Seller.objects.get(username="user4"),
+            "weight": 1200.0,
+            "color": "WHITE",
+            "made_in": "KOR",
+            "price": 40000,
+            "condition": "USED",
+            "mileage": 123,
+        },
+        {
+            "title": "Kia Rio",
+            "description": "lorem ipsum",
+            "category": Category.objects.get(title="vehicles"),
+            "seller": Seller.objects.get(username="user4"),
+            "weight": 1200.0,
+            "color": "YELLOW",
+            "made_in": "KOR",
+            "price": 45000,
             "condition": "NEW",
             "mileage": 0,
         },

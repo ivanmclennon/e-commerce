@@ -1,5 +1,9 @@
 {% extends "base.html" %}
 
+{% block title %}
+    Service - {{ object.title }}
+{% endblock title %}
+
 {% block main %}
     <h2>{{ object.title }}</h2>
     <ul>
@@ -9,4 +13,5 @@
         <li>Seller: {{ object.seller.username }}</li>
         <li>Type: {{ object.place_type }}</li>
     </ul>
+    <a class="btn btn-primary" href="{{ request.path|add:'/edit/' }}">Edit Listing</a>
 {% endblock main %}
