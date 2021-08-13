@@ -35,9 +35,9 @@ MAINTENANCE_MODE_STATUS_CODE = 503
 
 # Application definition
 
-SITE_ID = 1
+SITE_ID = 2
 
-LOGIN_REDIRECT_URL = '/'
+LOGIN_REDIRECT_URL = '/accounts/seller/'
 LOGOUT_REDIRECT_URL = '/'
 
 INSTALLED_APPS = [
@@ -155,6 +155,14 @@ SOCIALACCOUNT_PROVIDERS = {
     }
 }
 
+
+# Additional configuration settings
+SOCIALACCOUNT_QUERY_EMAIL = True
+ACCOUNT_LOGOUT_ON_GET = True
+ACCOUNT_UNIQUE_EMAIL = True
+ACCOUNT_EMAIL_REQUIRED = True
+
+ACCOUNT_ADAPTER = "main.utils.SellerAccountAdapter"
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
