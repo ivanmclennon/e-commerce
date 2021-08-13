@@ -8,8 +8,7 @@ Paste this command in shell:
 Run needed functions.
 
 """
-import json
-from typing import Dict, List, Optional, Tuple, Type
+from typing import List, Type
 from datetime import date
 
 from django.test import TestCase
@@ -95,12 +94,31 @@ def create_model_objects(model_class: Model, kw_list: List[dict]) -> None:
 
 def create_independent_models():
     sellers_kwargs = [
-        {"username": "user1", "password": "123456", "email": "user1@example.com"},
-        {"username": "user2", "password": "123456", "email": "user2@example.com"},
-        {"username": "user3", "password": "123456", "email": "user3@example.com"},
-        {"username": "user4", "password": "123456", "email": "user4@example.com"},
+        {
+            "username": "user1",
+            "email": "user1@example.com",
+            "birthday": date(2000, 1, 1),
+        },
+        {
+            "username": "user2",
+            "email": "user2@example.com",
+            "birthday": date(2000, 1, 1),
+        },
+        {
+            "username": "user3",
+            "email": "user3@example.com",
+            "birthday": date(2000, 1, 1),
+        },
+        {
+            "username": "user4",
+            "email": "user4@example.com",
+            "birthday": date(2000, 1, 1),
+        },
     ]
     create_model_objects(Seller, sellers_kwargs)
+    for seller in Seller.objects.all():
+        seller.set_password("123456")
+        seller.save()
 
     tags_kwargs = [
         {"title": "cheap"},
@@ -108,7 +126,6 @@ def create_independent_models():
         {"title": "used"},
         {"title": "delivery"},
         {"title": "credit"},
-        {"title": "car"},
     ]
     create_model_objects(Tag, tags_kwargs)
 
@@ -168,6 +185,26 @@ def create_default_items():
             "made_in": "DEU",
             "price": 150,
         },
+        {
+            "title": "Smartphone",
+            "description": "lorem ipsum",
+            "category": Category.objects.get(title="electronics"),
+            "seller": Seller.objects.get(username="user4"),
+            "weight": 0.15,
+            "color": "BLUE",
+            "made_in": "CHN",
+            "price": 500,
+        },
+        {
+            "title": "Pizza knife",
+            "description": "lorem ipsum",
+            "category": Category.objects.get(title="home and garden"),
+            "seller": Seller.objects.get(username="user4"),
+            "weight": 0.1,
+            "color": "RED",
+            "made_in": "ITA",
+            "price": 20,
+        },
     ]
     create_model_objects(ItemListing, items_kwargs)
 
@@ -219,6 +256,30 @@ def create_default_autos():
             "color": "RED",
             "made_in": "FRA",
             "price": 5000,
+            "condition": "NEW",
+            "mileage": 0,
+        },
+        {
+            "title": "Huyndai Solaris",
+            "description": "lorem ipsum",
+            "category": Category.objects.get(title="vehicles"),
+            "seller": Seller.objects.get(username="user4"),
+            "weight": 1200.0,
+            "color": "WHITE",
+            "made_in": "KOR",
+            "price": 40000,
+            "condition": "USED",
+            "mileage": 123,
+        },
+        {
+            "title": "Kia Rio",
+            "description": "lorem ipsum",
+            "category": Category.objects.get(title="vehicles"),
+            "seller": Seller.objects.get(username="user4"),
+            "weight": 1200.0,
+            "color": "YELLOW",
+            "made_in": "KOR",
+            "price": 45000,
             "condition": "NEW",
             "mileage": 0,
         },
