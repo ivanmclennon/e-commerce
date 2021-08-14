@@ -1,9 +1,6 @@
-import string
-import random
-
 from django.dispatch import receiver
 from django.db.models.signals import post_save, pre_save
-from django.contrib.auth.models import User, Group
+from django.contrib.auth.models import Group
 
 from .models import Seller, Category
 from .utils import unique_slug_generator
@@ -21,7 +18,7 @@ def assign_slug_from_title(sender, instance, *args, **kwargs):
         instance.slug = unique_slug_generator(instance)
 
 
-@receiver(post_save, sender=User)
+@receiver(post_save, sender=Seller)
 def assign_common_user_group(sender, instance, created, **kwargs):
     if created:
         group_name = "common users"
