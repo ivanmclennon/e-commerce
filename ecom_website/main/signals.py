@@ -3,10 +3,33 @@ from datetime import datetime as dt
 from django.dispatch import receiver
 from django.db.models.signals import post_save, pre_save
 from django.contrib.auth.models import Group
-from django.core.mail import send_mail
+from django.core.mail import send_mail, send_mass_mail
 
-from .models import Seller, Category
+from .models import Seller, Category, ItemListing, Subscriber
 from .utils import unique_slug_generator
+
+
+@receiver(post_save, sender=ItemListing)
+def send_newsletter(sender, instance: ItemListing, created, **kwargs):
+    if created:
+        message_template = f"""
+        New listing has just been published!
+
+        {instance.title}
+        {instance.description}
+        {instance.price}
+
+        You are subscribed to this newsletter.
+        """
+        subject = "New Item on ECOM"
+        from_email = "newsletter@ecom.com"
+        messages = []
+
+        for sub in Subscriber.objects.all():
+            message = (subject, message_template, from_email, [sub.email])
+            messages.append(message)
+
+        send_mass_mail(messages, fail_silently=False)
 
 
 @receiver(pre_save, sender=Category)
