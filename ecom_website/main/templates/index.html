@@ -21,8 +21,13 @@
 
         <div class="row">
             {% current_time "%Y-%m-%d %I:%M %p" as the_time %}
-            <h2>Server time is {{ the_time }}.</h2>
+            <p>Server time is {{ the_time }}.</p>
         </div>
+
+        <div class="row">
+            {% include "subscribe.html" %}
+        </div>
+
     </div>
 
 {% endblock main %}
