@@ -9,6 +9,20 @@ from django_countries.fields import CountryField
 from .validators import age_validator, weight_validator
 
 
+class Subscriber(models.Model):
+    """
+    Mailing list subscriber model
+
+    :param email: subscriber's email address
+    """
+
+    email = models.EmailField(unique=True, blank=False, null=False)
+
+    class Meta:
+        verbose_name = "subscriber"
+        verbose_name_plural = "subscribers"
+
+
 class Seller(User):
     """
     Seller class based on auth.User

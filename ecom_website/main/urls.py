@@ -2,6 +2,7 @@ from django.urls import path, include
 
 from .views import (
     index,
+    subscribe_view,
     ItemList,
     AutoList,
     ServiceList,
@@ -20,6 +21,7 @@ from .views import (
 
 urlpatterns = [
     path("", index, name="index"),
+    path("subscribe/", subscribe_view, name="subscribe"),
     path("accounts/", include("allauth.urls")),
     path("accounts/seller/", SellerUpdate.as_view(), name="seller_update"),
     path("items/", ItemList.as_view(), name="items_list"),
