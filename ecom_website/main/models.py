@@ -1,14 +1,26 @@
+from datetime import date
+
 from django.db import models
 from django.urls import reverse
 from django.contrib.auth.models import User
 
-from django.db.models.signals import pre_save
-from django.dispatch import receiver
-
 from django_countries.fields import CountryField
 
-from .signals import unique_slug_generator
 from .validators import age_validator, weight_validator
+
+
+class Subscriber(models.Model):
+    """
+    Mailing list subscriber model
+
+    :param email: subscriber's email address
+    """
+
+    email = models.EmailField(unique=True, blank=False, null=False)
+
+    class Meta:
+        verbose_name = "subscriber"
+        verbose_name_plural = "subscribers"
 
 
 class Seller(User):
@@ -19,7 +31,7 @@ class Seller(User):
     :prop count_listings: number of listings published by seller
     """
 
-    birthday = models.DateField(validators=(age_validator,))
+    birthday = models.DateField(default=date(2000, 1, 1), validators=(age_validator,))
     avatar = models.ImageField(
         upload_to="main/sellers",
         default="main/sellers/NO_AVATAR.png",
@@ -83,18 +95,6 @@ class Category(models.Model):
     class Meta:
         verbose_name = "category"
         verbose_name_plural = "categories"
-
-
-@receiver(pre_save, sender=Category)
-def pre_save_receiver(sender, instance, *args, **kwargs):
-    """
-    Creates unique slug attr from Category title pre-save
-
-    :param sender: Category model
-    :param instance: Category model instance
-    """
-    if not instance.slug:
-        instance.slug = unique_slug_generator(instance)
 
 
 class Listing(models.Model):

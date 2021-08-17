@@ -35,7 +35,10 @@ MAINTENANCE_MODE_STATUS_CODE = 503
 
 # Application definition
 
-SITE_ID = 1
+SITE_ID = 2
+
+LOGIN_REDIRECT_URL = '/accounts/seller/'
+LOGOUT_REDIRECT_URL = '/'
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -51,7 +54,11 @@ INSTALLED_APPS = [
     'maintenance_mode',
     'ckeditor',
     'ckeditor_uploader',
-    'main',
+    'main.apps.MainConfig',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
 ]
 
 MIDDLEWARE = [
@@ -124,6 +131,40 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+
+# Authentication
+AUTHENTICATION_BACKENDS = [
+    # Needed to login by username in Django admin, regardless of `allauth`
+    'django.contrib.auth.backends.ModelBackend',
+
+    # `allauth` specific authentication methods, such as login by e-mail
+    'allauth.account.auth_backends.AuthenticationBackend',
+]
+
+
+# Provider specific settings
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        'SCOPE': [
+            'profile',
+            'email',
+        ],
+        'AUTH_PARAMS': {
+            'access_type': 'online',
+        }
+    }
+}
+
+
+# Additional configuration settings
+SOCIALACCOUNT_QUERY_EMAIL = True
+ACCOUNT_LOGOUT_ON_GET = True
+ACCOUNT_UNIQUE_EMAIL = True
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_EMAIL_VERIFICATION = True
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+ACCOUNT_ADAPTER = "main.utils.SellerAccountAdapter"
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
