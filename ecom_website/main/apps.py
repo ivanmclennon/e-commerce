@@ -7,3 +7,6 @@ class MainConfig(AppConfig):
 
     def ready(self):
         import main.signals
+        from main.jobs import start_scheduler
+
+        start_scheduler()
