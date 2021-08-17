@@ -54,7 +54,7 @@ INSTALLED_APPS = [
     'maintenance_mode',
     'ckeditor',
     'ckeditor_uploader',
-    'main',
+    'main.apps.MainConfig',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
@@ -161,9 +161,9 @@ SOCIALACCOUNT_QUERY_EMAIL = True
 ACCOUNT_LOGOUT_ON_GET = True
 ACCOUNT_UNIQUE_EMAIL = True
 ACCOUNT_EMAIL_REQUIRED = True
-ACCOUNT_EMAIL_VERIFICATION = None
+ACCOUNT_EMAIL_VERIFICATION = True
 
-# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 ACCOUNT_ADAPTER = "main.utils.SellerAccountAdapter"
 
 # Internationalization
