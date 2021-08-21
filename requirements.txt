@@ -1,6 +1,5 @@
 amqp==5.0.6
 appdirs==1.4.4
-APScheduler==3.7.0
 asgiref==3.4.1
 autopep8==1.5.7
 billiard==3.6.4.0
