@@ -323,3 +323,10 @@ def create_default_services():
         },
     ]
     create_model_objects(ServiceListing, services_kwargs)
+
+
+def load_default_data():
+    create_independent_models()
+    create_default_items()
+    create_default_autos()
+    create_default_services()
