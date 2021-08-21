@@ -1,6 +1,8 @@
-from datetime import date
+from datetime import date, datetime, timedelta
+from typing import TypeVar
 
 from django.db import models
+from django.db.models.query import QuerySet
 from django.urls import reverse
 from django.contrib.auth.models import User
 
@@ -244,19 +246,63 @@ class ServiceListing(Listing):
         verbose_name_plural = "services"
 
 
+class WeeklyListingManager(models.Manager):
+    def get_queryset(self) -> QuerySet[Listing]:
+        week_ago: datetime = datetime.now() - timedelta(weeks=1)
+        return super().get_queryset().filter(date_created__gt=week_ago)
+
+
 class ItemProxy(ItemListing):
+
+    lastweek_objects = WeeklyListingManager()
+
+    @property
+    def email_info(self):
+        return f"""
+            Item: {self.title}
+            Description: {self.description}
+            Price: {self.price}
+            Link: http://127.0.0.1:8000{self.get_absolute_url()}
+            """
+
     class Meta:
         proxy = True
         ordering = ["date_created"]
 
 
 class AutoProxy(AutoListing):
+
+    lastweek_objects = WeeklyListingManager()
+
+    @property
+    def email_info(self):
+        return f"""
+            Car: {self.title}
+            Description: {self.description}
+            Condition: {self.get_condition_display().capitalize()}
+            Price: {self.price}
+            Link: http://127.0.0.1:8000{self.get_absolute_url()}
+            """
+
     class Meta:
         proxy = True
         ordering = ["date_created"]
 
 
 class ServiceProxy(ServiceListing):
+
+    lastweek_objects = WeeklyListingManager()
+
+    @property
+    def email_info(self):
+        return f"""
+            Service: {self.title}
+            Description: {self.description}
+            Type: {self.get_place_type_display().capitalize()}
+            Price: {self.price}
+            Link: http://127.0.0.1:8000{self.get_absolute_url()}
+            """
+
     class Meta:
         proxy = True
         ordering = ["date_created"]
