@@ -5,6 +5,7 @@ import random
 from vonage import Sms
 from celery import shared_task
 
+from main.models import Seller
 from .models import SMSLog
 
 
@@ -24,12 +25,18 @@ def get_random_code(n: int = 4, chars: str = string.digits) -> str:
 
 
 @shared_task
-def send_sms_task():
-    sms_text = get_random_code()
+def send_sms_task(to_number: str, sms_text: str = get_random_code()):
+    """
+    Send confirmation code to a phone number
+    and log the message data.
+
+    :param to_number: phone number in E164 string format
+    :param sms_text: code to send in sms
+    """
     sms_response = sms.send_message(
         {
             "from": os.environ.get("VONAGE_BRAND_NAME"),
-            "to": "",
+            "to": to_number,
             "text": sms_text,
         }
     )
