@@ -54,6 +54,7 @@ INSTALLED_APPS = [
     "maintenance_mode",
     "ckeditor",
     "ckeditor_uploader",
+    "phonenumber_field",
     "main.apps.MainConfig",
     "allauth",
     "allauth.account",
