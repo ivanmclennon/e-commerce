@@ -56,6 +56,7 @@ INSTALLED_APPS = [
     "ckeditor_uploader",
     "phonenumber_field",
     "main.apps.MainConfig",
+    "sms",
     "allauth",
     "allauth.account",
     "allauth.socialaccount",
