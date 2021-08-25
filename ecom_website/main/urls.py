@@ -9,7 +9,6 @@ from .views import (
     ItemDetail,
     AutoDetail,
     ServiceDetail,
-    SellerUpdate,
     ItemCreate,
     AutoCreate,
     ServiceCreate,
@@ -22,8 +21,6 @@ from .views import (
 urlpatterns = [
     path("", index, name="index"),
     path("subscribe/", subscribe_view, name="subscribe"),
-    path("accounts/", include("allauth.urls")),
-    path("accounts/seller/", SellerUpdate.as_view(), name="seller_update"),
     path("items/", ItemList.as_view(), name="items_list"),
     path("cars/", AutoList.as_view(), name="cars_list"),
     path("services/", ServiceList.as_view(), name="services_list"),
