@@ -21,8 +21,8 @@ class Seller(User):
 
     birthday = models.DateField(default=date(2000, 1, 1), validators=(age_validator,))
     avatar = models.ImageField(
-        upload_to="main/sellers",
-        default="main/sellers/NO_AVATAR.png",
+        upload_to="users/sellers",
+        default="users/sellers/NO_AVATAR.png",
     )
     # use .as_e164 to get string representation
     phone_number = PhoneNumberField(null=False, blank=False, default="+79991112233")
