@@ -1,5 +1,4 @@
 from datetime import date, datetime, timedelta
-from typing import TypeVar
 
 from django.db import models
 from django.db.models.query import QuerySet
@@ -7,6 +6,7 @@ from django.urls import reverse
 from django.contrib.auth.models import User
 
 from django_countries.fields import CountryField
+from phonenumber_field.modelfields import PhoneNumberField
 
 from .validators import age_validator, weight_validator
 
@@ -30,6 +30,8 @@ class Seller(User):
     Seller class based on auth.User
 
     :param birthday: date of birth
+    :param avatar: avatar image
+    :param phone_number: phone number
     :prop count_listings: number of listings published by seller
     """
 
@@ -38,6 +40,8 @@ class Seller(User):
         upload_to="main/sellers",
         default="main/sellers/NO_AVATAR.png",
     )
+    # use .as_e164 to get string representation
+    phone_number = PhoneNumberField(null=False, blank=False, default="+79991112233")
 
     itemlisting_set: models.QuerySet
     autolisting_set: models.QuerySet
