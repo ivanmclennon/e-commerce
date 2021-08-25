@@ -1,7 +1,5 @@
 from django.contrib import admin
 from django import forms
-from django.contrib.auth.models import User
-from django.db import models
 from django.contrib.flatpages.models import FlatPage
 from django.contrib.flatpages.admin import FlatPageAdmin
 
@@ -11,8 +9,6 @@ from .models import (
     Category,
     Picture,
     Tag,
-    Seller,
-    Listing,
     ItemProxy,
     AutoProxy,
     ServiceProxy,
@@ -34,25 +30,6 @@ class CategoryAdmin(admin.ModelAdmin):
 class TagAdmin(admin.ModelAdmin):
     list_display = ("title",)
     search_fields = ("title",)
-
-
-class UserAdmin(admin.ModelAdmin):
-    search_fields = ("username",)
-    list_display = (
-        "id",
-        "username",
-        "email",
-    )
-
-
-admin.site.unregister(User)
-admin.site.register(User, UserAdmin)
-
-
-@admin.register(Seller)
-class SellerAdmin(admin.ModelAdmin):
-    search_fields = ("username",)
-    list_display = ("username", "email")
 
 
 @admin.register(ItemProxy)
@@ -96,7 +73,7 @@ class PictureAdmin(admin.ModelAdmin):
 
 @admin.register(Subscriber)
 class SubscriberAdmin(admin.ModelAdmin):
-    list_display = ('email',)
+    list_display = ("email",)
 
 
 @admin.register(ServiceProxy)
