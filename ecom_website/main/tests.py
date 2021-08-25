@@ -9,13 +9,13 @@ Run needed functions.
 
 """
 from typing import List, Type
-from datetime import date
 
-from django.test import TestCase
 from django.db.models import Model
 
+from users.models import Seller
+from users.tests import create_default_sellers
+
 from .models import (
-    Seller,
     Tag,
     Category,
     ItemListing,
@@ -93,32 +93,6 @@ def create_model_objects(model_class: Model, kw_list: List[dict]) -> None:
 
 
 def create_independent_models():
-    sellers_kwargs = [
-        {
-            "username": "user1",
-            "email": "user1@example.com",
-            "birthday": date(2000, 1, 1),
-        },
-        {
-            "username": "user2",
-            "email": "user2@example.com",
-            "birthday": date(2000, 1, 1),
-        },
-        {
-            "username": "user3",
-            "email": "user3@example.com",
-            "birthday": date(2000, 1, 1),
-        },
-        {
-            "username": "user4",
-            "email": "user4@example.com",
-            "birthday": date(2000, 1, 1),
-        },
-    ]
-    create_model_objects(Seller, sellers_kwargs)
-    for seller in Seller.objects.all():
-        seller.set_password("123456")
-        seller.save()
 
     tags_kwargs = [
         {"title": "cheap"},
@@ -326,6 +300,7 @@ def create_default_services():
 
 
 def load_default_data():
+    create_default_sellers()
     create_independent_models()
     create_default_items()
     create_default_autos()
