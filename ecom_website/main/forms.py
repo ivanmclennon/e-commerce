@@ -1,5 +1,3 @@
-from datetime import date
-
 from django import forms
 from django.forms.models import inlineformset_factory
 
@@ -8,32 +6,10 @@ from django_countries.widgets import CountrySelectWidget
 from .models import (
     Subscriber,
     Picture,
-    Seller,
     ItemListing,
     AutoListing,
     ServiceListing,
 )
-
-
-class SellerForm(forms.ModelForm):
-    """
-    Form for SellerUpdate CBV
-    Uses widget for selecting birthday dates within last 100 years
-    """
-
-    class Meta:
-        model = Seller
-        fields = [
-            "first_name",
-            "last_name",
-            "email",
-            "birthday",
-        ]
-        widgets = {
-            "birthday": forms.widgets.SelectDateWidget(
-                years=range(date.today().year - 100, date.today().year - 17)
-            )
-        }
 
 
 class ItemForm(forms.ModelForm):
@@ -90,4 +66,4 @@ class SubscriberForm(forms.ModelForm):
 
     class Meta:
         model = Subscriber
-        fields = ('email',)
+        fields = ("email",)
