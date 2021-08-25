@@ -173,7 +173,7 @@ ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_EMAIL_VERIFICATION = True
 
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
-ACCOUNT_ADAPTER = "main.utils.SellerAccountAdapter"
+ACCOUNT_ADAPTER = "users.adapters.SellerAccountAdapter"
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
