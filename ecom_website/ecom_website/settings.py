@@ -56,6 +56,7 @@ INSTALLED_APPS = [
     "ckeditor_uploader",
     "phonenumber_field",
     "main.apps.MainConfig",
+    "users.apps.UsersConfig",
     "sms",
     "allauth",
     "allauth.account",
@@ -96,6 +97,7 @@ TEMPLATES = [
             ],
             "builtins": [
                 "main.templatetags.main_tags",
+                "users.templatetags.users_tags",
             ],
         },
     },
