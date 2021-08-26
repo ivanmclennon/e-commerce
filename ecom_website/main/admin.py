@@ -5,14 +5,7 @@ from django.contrib.flatpages.admin import FlatPageAdmin
 
 from ckeditor.widgets import CKEditorWidget
 
-from .models import (
-    Category,
-    Picture,
-    Tag,
-    ItemProxy,
-    AutoProxy,
-    ServiceProxy,
-)
+from .models import Category, Picture, Tag
 
 
 @admin.register(Category)
@@ -31,60 +24,9 @@ class TagAdmin(admin.ModelAdmin):
     search_fields = ("title",)
 
 
-@admin.register(ItemProxy)
-class ItemProxyAdmin(admin.ModelAdmin):
-    search_fields = (
-        "title",
-        "category",
-        "seller",
-    )
-    list_display = (
-        "title",
-        "category",
-        "seller",
-        "price",
-        "date_created",
-        "date_modified",
-    )
-
-
-@admin.register(AutoProxy)
-class AutoProxyAdmin(admin.ModelAdmin):
-    search_fields = (
-        "title",
-        "category",
-        "seller",
-    )
-    list_display = (
-        "title",
-        "category",
-        "condition",
-        "seller",
-        "price",
-        "date_created",
-    )
-
-
 @admin.register(Picture)
 class PictureAdmin(admin.ModelAdmin):
     pass
-
-
-@admin.register(ServiceProxy)
-class ServiceProxyAdmin(admin.ModelAdmin):
-    search_fields = (
-        "title",
-        "category",
-        "seller",
-    )
-    list_display = (
-        "title",
-        "category",
-        "place_type",
-        "seller",
-        "price",
-        "date_created",
-    )
 
 
 class FlatPageAdminForm(forms.ModelForm):
