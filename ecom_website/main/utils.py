@@ -1,9 +1,12 @@
 import string
 import random
+from itertools import chain
 
 from unidecode import unidecode as ud
 
 from django.utils.text import slugify
+
+from .models import ItemProxy, AutoProxy, ServiceProxy
 
 
 def random_string_generator(
@@ -41,3 +44,16 @@ def unique_slug_generator(instance, new_slug: str = None) -> str:
         new_slug = f"{slug}-{randstr}"
         return unique_slug_generator(instance, new_slug=new_slug)
     return slug
+
+
+def get_lastweek_listings() -> list:
+    """
+    Returns a list of all listing objects posted during last week.
+    """
+    return list(
+        chain(
+            ItemProxy.lastweek_objects.all(),
+            AutoProxy.lastweek_objects.all(),
+            ServiceProxy.lastweek_objects.all(),
+        )
+    )
