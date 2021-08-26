@@ -4,7 +4,6 @@ from django.forms.models import inlineformset_factory
 from django_countries.widgets import CountrySelectWidget
 
 from .models import (
-    Subscriber,
     Picture,
     ItemListing,
     AutoListing,
@@ -57,13 +56,3 @@ class ServiceForm(forms.ModelForm):
         widgets = {
             "description": forms.widgets.TextInput(),
         }
-
-
-class SubscriberForm(forms.ModelForm):
-    """
-    Form for subscribing to newsletter
-    """
-
-    class Meta:
-        model = Subscriber
-        fields = ("email",)
