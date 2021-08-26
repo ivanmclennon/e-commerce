@@ -22,7 +22,7 @@ class ListingList(ListView):
 
     model: Listing
     paginate_by: int = 10
-    template_name: str = "main/base_listview.html"
+    template_name: str = "base_listview.html"
 
     def get_queryset(self) -> QuerySet[Listing]:
         """
@@ -54,7 +54,7 @@ class ListingCreate(CheckUserRightsMixin, CreateView):
     :param template_name: base template for creating
     """
 
-    template_name: str = "main/base_create_form.html"
+    template_name: str = "base_create_form.html"
 
     def form_valid(self, form) -> HttpResponse:
         """
@@ -71,7 +71,7 @@ class ListingUpdate(LoginRequiredMixin, UpdateView):
     :param template_name: base template for updating
     """
 
-    template_name: str = "main/base_update_form.html"
+    template_name: str = "base_update_form.html"
 
 
 class ListingDetail(DetailView):
