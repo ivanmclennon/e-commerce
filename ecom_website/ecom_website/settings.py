@@ -27,7 +27,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-# Maintenance
+# Maintenance mode
 MAINTENANCE_MODE = False
 MAINTENANCE_MODE_IGNORE_ADMIN_SITE = True
 MAINTENANCE_MODE_TEMPLATE = "503.html"
@@ -40,7 +40,9 @@ SITE_ID = 2
 LOGIN_REDIRECT_URL = "/accounts/seller/"
 LOGOUT_REDIRECT_URL = "/"
 
-INSTALLED_APPS = [
+# Installed apps
+
+DJANGO_APPS = [
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -49,22 +51,33 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "django.contrib.sites",
     "django.contrib.flatpages",
+]
+
+THIRD_PARTY_APPS = [
     "sorl.thumbnail",
     "django_countries",
     "maintenance_mode",
     "ckeditor",
     "ckeditor_uploader",
     "phonenumber_field",
+]
+
+USER_DEFINED_APPS = [
     "main.apps.MainConfig",
     "users.apps.UsersConfig",
     "listings.apps.ListingsConfig",
     "emails",
     "sms",
+]
+
+ALLAUTH_APPS = [
     "allauth",
     "allauth.account",
     "allauth.socialaccount",
     "allauth.socialaccount.providers.google",
 ]
+
+INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + USER_DEFINED_APPS + ALLAUTH_APPS
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
