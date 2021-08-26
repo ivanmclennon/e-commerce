@@ -3,7 +3,7 @@ from django.db.models.signals import post_save, pre_save
 
 from .models import Category, ItemListing
 from .utils import unique_slug_generator
-from .tasks import newsletter_task
+from emails.tasks import newsletter_task
 
 
 @receiver(post_save, sender=ItemListing)
