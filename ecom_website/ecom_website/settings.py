@@ -57,6 +57,7 @@ INSTALLED_APPS = [
     "phonenumber_field",
     "main.apps.MainConfig",
     "users.apps.UsersConfig",
+    "listings.apps.ListingsConfig",
     "emails",
     "sms",
     "allauth",
