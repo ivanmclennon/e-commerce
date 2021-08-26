@@ -25,6 +25,7 @@ urlpatterns = [
     path("ckeditor/", include("ckeditor_uploader.urls")),
     path("catalogue/", include("main.urls")),
     path("accounts/", include("users.urls")),
+    path("subscribe/", include("emails.urls")),
     path("logout", LogoutView.as_view(), name="logout"),
 ]
 
