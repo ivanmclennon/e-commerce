@@ -3,12 +3,12 @@ from django.forms.models import inlineformset_factory
 
 from django_countries.widgets import CountrySelectWidget
 
-from .models import (
-    Picture,
-    ItemListing,
-    AutoListing,
-    ServiceListing,
-)
+from main.models import Picture
+from .models import ItemListing, AutoListing, ServiceListing
+
+
+# inline formset for adding/editing Picture objects tied to AutoListing
+ImageFormset = inlineformset_factory(AutoListing, Picture, fields=("image",), extra=1)
 
 
 class ItemForm(forms.ModelForm):
@@ -39,10 +39,6 @@ class AutoForm(forms.ModelForm):
             "made_in": CountrySelectWidget(),
             "description": forms.widgets.TextInput(),
         }
-
-
-# inline formset for adding/editing Picture objects tied to AutoListing
-ImageFormset = inlineformset_factory(AutoListing, Picture, fields=("image",), extra=1)
 
 
 class ServiceForm(forms.ModelForm):
