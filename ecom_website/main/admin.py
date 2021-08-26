@@ -5,7 +5,7 @@ from django.contrib.flatpages.admin import FlatPageAdmin
 
 from ckeditor.widgets import CKEditorWidget
 
-from .models import Category, Picture, Tag
+from .models import Category, Tag
 
 
 @admin.register(Category)
@@ -22,11 +22,6 @@ class CategoryAdmin(admin.ModelAdmin):
 class TagAdmin(admin.ModelAdmin):
     list_display = ("title",)
     search_fields = ("title",)
-
-
-@admin.register(Picture)
-class PictureAdmin(admin.ModelAdmin):
-    pass
 
 
 class FlatPageAdminForm(forms.ModelForm):
