@@ -12,7 +12,6 @@ from .models import (
     ItemProxy,
     AutoProxy,
     ServiceProxy,
-    Subscriber,
 )
 
 
@@ -69,11 +68,6 @@ class AutoProxyAdmin(admin.ModelAdmin):
 @admin.register(Picture)
 class PictureAdmin(admin.ModelAdmin):
     pass
-
-
-@admin.register(Subscriber)
-class SubscriberAdmin(admin.ModelAdmin):
-    list_display = ("email",)
 
 
 @admin.register(ServiceProxy)
