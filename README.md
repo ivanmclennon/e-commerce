@@ -16,3 +16,12 @@ Release 0.4.7 features:
 - inline form for adding pictures to car listings
 - some custom form validation
 - codebase typing, documentation and cleanup
+
+Release 0.7.5 features:
+- separated app structure
+- authorization via django-allauth & google
+- user groups and rights
+- newsletter emailing and sms messaging via celery
+- celery using redis message broker
+- redis running in docker-compose
+- using local postgresql db on ubuntu
