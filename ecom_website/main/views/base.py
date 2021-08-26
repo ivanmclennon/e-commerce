@@ -1,47 +1,21 @@
 from typing import Any, Dict
 from urllib.parse import urlencode
 
-from django.contrib import messages
 from django.shortcuts import render
-from django.urls.base import reverse
 from django.db.models import QuerySet
-from django.http import HttpRequest, HttpResponse, HttpResponseRedirect
+from django.http import HttpRequest, HttpResponse
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import ListView, DetailView, UpdateView, CreateView
 
 from users.views import CheckUserRightsMixin
 from ..models import Listing, Seller
-from ..forms import SubscriberForm
 
 
 def index(request: HttpRequest) -> HttpResponse:
     """
     Render index.html template
-    Includes newsletter subscriber form
     """
-    subscriber_form = SubscriberForm()
-    return render(
-        request,
-        "index.html",
-        {
-            "form": subscriber_form,
-        },
-    )
-
-
-def subscribe_view(request: HttpRequest) -> HttpResponse:
-
-    if request.method == "POST":
-        form = SubscriberForm(request.POST)
-
-        if form.is_valid():
-            form.save()
-            messages.success(request, "Subscribed to newsletter!")
-        else:
-            messages.error(
-                request, f"Cannot subscribe with email: {form.cleaned_data.email}"
-            )
-    return HttpResponseRedirect(reverse("index"))
+    return render(request, "index.html")
 
 
 class ListingList(ListView):
