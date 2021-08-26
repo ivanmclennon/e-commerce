@@ -3,8 +3,9 @@ from typing import Any, Dict
 from django.contrib import messages
 from django.http.response import HttpResponse
 
-from main.models import AutoListing, Seller
-from main.forms import AutoForm, ImageFormset
+from users.models import Seller
+from ..models import AutoListing
+from ..forms import AutoForm, ImageFormset
 from .base import ListingList, ListingDetail, ListingCreate, ListingUpdate
 
 

@@ -1,6 +1,6 @@
 from .base import ListingList, ListingDetail, ListingCreate, ListingUpdate
-from main.models import ServiceListing
-from main.forms import ServiceForm
+from ..models import ServiceListing
+from ..forms import ServiceForm
 
 
 class ServiceList(ListingList):

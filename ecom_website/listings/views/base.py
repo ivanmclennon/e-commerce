@@ -1,21 +1,14 @@
 from typing import Any, Dict
 from urllib.parse import urlencode
 
-from django.shortcuts import render
 from django.db.models import QuerySet
 from django.http import HttpRequest, HttpResponse
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import ListView, DetailView, UpdateView, CreateView
 
 from users.views import CheckUserRightsMixin
-from ..models import Listing, Seller
-
-
-def index(request: HttpRequest) -> HttpResponse:
-    """
-    Render index.html template
-    """
-    return render(request, "index.html")
+from users.models import Seller
+from ..models import Listing
 
 
 class ListingList(ListView):

@@ -1,6 +1,6 @@
 from .base import ListingList, ListingUpdate, ListingDetail, ListingCreate
-from main.models import ItemListing
-from main.forms import ItemForm
+from ..models import ItemListing
+from ..forms import ItemForm
 
 
 class ItemCreate(ListingCreate):
