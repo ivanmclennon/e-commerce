@@ -2,8 +2,8 @@ from celery import shared_task
 
 from django.core.mail import send_mass_mail
 
-from main.models import ItemProxy
-from main.utils import get_lastweek_listings
+from listings.models import ItemProxy
+from listings.utils import get_lastweek_listings
 from .models import Subscriber
 
 

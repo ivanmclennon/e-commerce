@@ -1,7 +1,3 @@
-from typing import List, Type
-
-from django.db.models import Model
-
 from users.tests import create_default_sellers
 from emails.tests import create_default_subs
 

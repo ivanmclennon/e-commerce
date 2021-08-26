@@ -5,7 +5,7 @@ import random
 from vonage import Sms
 from celery import shared_task
 
-from main.models import Seller
+from users.models import Seller
 from .models import SMSLog
 
 
