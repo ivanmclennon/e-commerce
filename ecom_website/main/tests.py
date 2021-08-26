@@ -15,7 +15,7 @@ from .models import (
 )
 
 
-def create_model_objects(model_class: Model, kw_list: List[dict]) -> None:
+def create_model_objects(model_class, kw_list: List[dict]) -> None:
     for kwargs in kw_list:
         obj, created = model_class.objects.get_or_create(**kwargs)
         if not created:
