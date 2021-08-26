@@ -68,6 +68,7 @@ USER_DEFINED_APPS = [
     "listings.apps.ListingsConfig",
     "emails",
     "sms",
+    "images",
 ]
 
 ALLAUTH_APPS = [
