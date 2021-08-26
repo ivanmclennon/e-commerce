@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% load main_tags %}
+
+{% block title %}
+    {% dynamic_title %}
+{% endblock title %}
+
+{% block main %}
+    
+    <h2>{% dynamic_title %}</h2>
+
+    <a class="btn btn-primary" href="add/">Add a New Listing</a>
+
+    {% include 'listview_display.html' %}
+
+    {% include 'listview_paginator.html' %}
+
+{% endblock main %}
