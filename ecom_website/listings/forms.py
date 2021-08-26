@@ -3,7 +3,7 @@ from django.forms.models import inlineformset_factory
 
 from django_countries.widgets import CountrySelectWidget
 
-from main.models import Picture
+from images.models import Picture
 from .models import ItemListing, AutoListing, ServiceListing
 
 
