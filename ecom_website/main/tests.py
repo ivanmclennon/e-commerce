@@ -1,19 +1,10 @@
-"""
-Execute code from this file by running in terminal:
->> python manage.py shell
-
-Paste this command in shell:
->> from main.tests import create_independent_models, create_default_items, create_default_autos, create_default_services
-
-Run needed functions.
-
-"""
 from typing import List, Type
 
 from django.db.models import Model
 
 from users.models import Seller
 from users.tests import create_default_sellers
+from emails.tests import create_default_subs
 
 from .models import (
     Tag,
@@ -22,67 +13,6 @@ from .models import (
     AutoListing,
     ServiceListing,
 )
-
-
-class DumpDB:
-
-    SELLER_ATTRS = (
-        "username",
-        "first_name",
-        "last_name",
-        "email",
-        "birthday",
-    )
-
-    TAG_ATTRS = ("title",)
-
-    CATEGORY_ATTRS = ("title",)
-
-    LISTING_ATTRS = (
-        "title",
-        "description",
-        "category",
-        "seller",
-        "tags",
-        "price",
-    )
-
-    ITEM_ATTRS = LISTING_ATTRS + (
-        "weight",
-        "made_in",
-        "color",
-    )
-
-    AUTO_ATTRS = LISTING_ATTRS + (
-        "weight",
-        "made_in",
-        "color",
-        "condition",
-        "mileage",
-    )
-
-    SERVICE_ATTRS = LISTING_ATTRS + ("place_type",)
-
-    ATTRS_MAP = {
-        "Seller": SELLER_ATTRS,
-        "Tag": TAG_ATTRS,
-        "Category": CATEGORY_ATTRS,
-        "ItemListing": ITEM_ATTRS,
-        "AutoListing": AUTO_ATTRS,
-        "ServiceListing": SERVICE_ATTRS,
-    }
-
-    def __init__(self, model_class: Type[Model]) -> None:
-        self.model_class = model_class
-        self.model_attrs = self.ATTRS_MAP[model_class.__name__]
-
-    def dump(self):
-        model_objects = self.model_class.objects.all()
-        objects_list = [
-            {attr: getattr(obj, attr, "") for attr in self.model_attrs}
-            for obj in self.model_class.objects.all()
-        ]
-        print(objects_list)
 
 
 def create_model_objects(model_class: Model, kw_list: List[dict]) -> None:
@@ -302,6 +232,68 @@ def create_default_services():
 def load_default_data():
     create_default_sellers()
     create_independent_models()
+    create_default_subs()
     create_default_items()
     create_default_autos()
     create_default_services()
+
+
+class DumpDB:
+
+    SELLER_ATTRS = (
+        "username",
+        "first_name",
+        "last_name",
+        "email",
+        "birthday",
+    )
+
+    TAG_ATTRS = ("title",)
+
+    CATEGORY_ATTRS = ("title",)
+
+    LISTING_ATTRS = (
+        "title",
+        "description",
+        "category",
+        "seller",
+        "tags",
+        "price",
+    )
+
+    ITEM_ATTRS = LISTING_ATTRS + (
+        "weight",
+        "made_in",
+        "color",
+    )
+
+    AUTO_ATTRS = LISTING_ATTRS + (
+        "weight",
+        "made_in",
+        "color",
+        "condition",
+        "mileage",
+    )
+
+    SERVICE_ATTRS = LISTING_ATTRS + ("place_type",)
+
+    ATTRS_MAP = {
+        "Seller": SELLER_ATTRS,
+        "Tag": TAG_ATTRS,
+        "Category": CATEGORY_ATTRS,
+        "ItemListing": ITEM_ATTRS,
+        "AutoListing": AUTO_ATTRS,
+        "ServiceListing": SERVICE_ATTRS,
+    }
+
+    def __init__(self, model_class: Type[Model]) -> None:
+        self.model_class = model_class
+        self.model_attrs = self.ATTRS_MAP[model_class.__name__]
+
+    def dump(self):
+        model_objects = self.model_class.objects.all()
+        objects_list = [
+            {attr: getattr(obj, attr, "") for attr in self.model_attrs}
+            for obj in self.model_class.objects.all()
+        ]
+        print(objects_list)
