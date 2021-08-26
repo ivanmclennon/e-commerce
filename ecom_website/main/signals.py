@@ -1,18 +1,8 @@
 from django.dispatch import receiver
-from django.db.models.signals import post_save, pre_save
+from django.db.models.signals import pre_save
 
-from .models import Category, ItemListing
+from .models import Category
 from .utils import unique_slug_generator
-from emails.tasks import newsletter_task
-
-
-@receiver(post_save, sender=ItemListing)
-def notify_new_item(sender, instance, created, **kwargs):
-    """
-    Calls newsletter_task on new ItemListing saved to db.
-    """
-    if created:
-        newsletter_task(instance.pk)
 
 
 @receiver(pre_save, sender=Category)
