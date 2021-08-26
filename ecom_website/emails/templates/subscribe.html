@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Subscribe
+{% endblock title %}
+
+{% block main %}
+    <h3>Subscribe to Our Newsletter!</h3>
+
+    <form class="form my-4 px-3" action="{% url 'subscribe' %}" method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input class="btn btn-primary" type="submit" value="Subscribe">
+    </form>
+{% endblock main %}
