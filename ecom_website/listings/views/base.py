@@ -1,8 +1,10 @@
+import random
 from typing import Any, Dict
 from urllib.parse import urlencode
 
+from django.core.cache import cache
 from django.db.models import QuerySet
-from django.http import HttpRequest, HttpResponse
+from django.http import HttpResponse
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import ListView, DetailView, UpdateView, CreateView
 
@@ -11,6 +13,7 @@ from users.models import Seller
 from ..models import Listing
 
 
+# @method_decorator(cache_page(30), name="dispatch")
 class ListingList(ListView):
     """
     Base class for displaying a list of listings
@@ -74,9 +77,23 @@ class ListingUpdate(LoginRequiredMixin, UpdateView):
     template_name: str = "listings/base_update_form.html"
 
 
+# @method_decorator(cache_page(30), name="dispatch")
 class ListingDetail(DetailView):
     """
     Base class for displaying a listing
     """
 
-    pass
+    model: Listing
+
+    def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
+        context = super().get_context_data(**kwargs)
+        obj: Listing = self.get_object()
+
+        cache_key = f"{obj.__class__.__name__}_{obj.pk}_price"
+        if not cache.get(cache_key):
+            coef = random.uniform(0.8, 1.2)
+            cache.set(cache_key, int(obj.price * coef), 60)
+
+        obj.price = cache.get(cache_key)
+        context["object"] = obj
+        return context
