@@ -41,6 +41,9 @@ class Listing(models.Model):
     def __str__(self) -> str:
         return self.title
 
+    def get_absolute_url(self) -> str:
+        return ""
+
     class Meta:
         verbose_name = "listing"
         verbose_name_plural = "listings"
