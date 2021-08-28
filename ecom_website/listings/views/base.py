@@ -22,12 +22,9 @@ class ListingOwnerMixin(LoginRequiredMixin, UserPassesTestMixin):
     request: HttpRequest
     model: Listing
     kwargs: Dict[str, Any]
-    object: Listing
 
     def get_object(self, *args, **kwargs) -> Listing:
-        if not self.object:
-            self.object = self.model.objects.get(pk=self.kwargs["pk"])
-        return self.object
+        return self.model.objects.get(pk=self.kwargs["pk"])
 
     def get_success_url(self, *args, **kwargs) -> str:
         return self.get_object().get_absolute_url()
