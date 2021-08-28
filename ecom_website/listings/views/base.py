@@ -1,11 +1,12 @@
 import random
-from typing import Any, Dict
+from typing import Any, Dict, Callable
 from urllib.parse import urlencode
 
+from django.contrib import messages
 from django.core.cache import cache
 from django.db.models import QuerySet
-from django.http import HttpResponse
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.http import HttpResponse, HttpRequest, HttpResponseRedirect
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.views.generic import ListView, DetailView, UpdateView, CreateView
 
 from users.views import CheckUserRightsMixin
@@ -13,7 +14,41 @@ from users.models import Seller
 from ..models import Listing
 
 
-# @method_decorator(cache_page(30), name="dispatch")
+class ListingOwnerMixin(LoginRequiredMixin, UserPassesTestMixin):
+    """
+    Mixin for only letting Sellers edit their Listings.
+    """
+
+    request: HttpRequest
+    model: Listing
+    kwargs: Dict[str, Any]
+    object: Listing
+
+    def get_object(self, *args, **kwargs) -> Listing:
+        if not self.object:
+            self.object = self.model.objects.get(pk=self.kwargs["pk"])
+        return self.object
+
+    def get_success_url(self, *args, **kwargs) -> str:
+        return self.get_object().get_absolute_url()
+
+    def get_test_func(self) -> Callable:
+        return self.is_seller_of_listing
+
+    def is_seller_of_listing(self):
+        return self.request.user.username == self.get_object().seller.username
+
+    def handle_no_permission(self) -> HttpResponseRedirect:
+        """
+        Redirect to listing page with warning message if authenticated, otherwise to login.
+        """
+        if not self.request.user.is_authenticated:
+            return super().handle_no_permission()
+
+        messages.warning(self.request, "You cannot edit this listing.")
+        return HttpResponseRedirect(self.get_success_url())
+
+
 class ListingList(ListView):
     """
     Base class for displaying a list of listings
@@ -67,7 +102,7 @@ class ListingCreate(CheckUserRightsMixin, CreateView):
         return super().form_valid(form)
 
 
-class ListingUpdate(LoginRequiredMixin, UpdateView):
+class ListingUpdate(ListingOwnerMixin, UpdateView):
     """
     Base class for updating a listing
 
