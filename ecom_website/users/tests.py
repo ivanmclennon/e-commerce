@@ -9,21 +9,25 @@ def create_default_sellers():
             "username": "user1",
             "email": "user1@example.com",
             "birthday": date(2000, 1, 1),
+            "phone_number": "+79991111111",
         },
         {
             "username": "user2",
             "email": "user2@example.com",
             "birthday": date(2000, 1, 1),
+            "phone_number": "+79992222222",
         },
         {
             "username": "user3",
             "email": "user3@example.com",
             "birthday": date(2000, 1, 1),
+            "phone_number": "+79993333333",
         },
         {
             "username": "user4",
             "email": "user4@example.com",
             "birthday": date(2000, 1, 1),
+            "phone_number": "+79994444444",
         },
     ]
 
