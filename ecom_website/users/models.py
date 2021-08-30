@@ -25,7 +25,7 @@ class Seller(User):
         default="users/sellers/NO_AVATAR.png",
     )
     # use .as_e164 to get string representation
-    phone_number = PhoneNumberField(null=False, blank=False, default="+79991112233")
+    phone_number = PhoneNumberField(null=False, blank=False, unique=True)
 
     itemlisting_set: models.QuerySet
     autolisting_set: models.QuerySet

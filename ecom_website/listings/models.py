@@ -1,3 +1,4 @@
+from typing import Callable
 from datetime import datetime, timedelta
 
 from django.db import models
@@ -40,6 +41,9 @@ class Listing(models.Model):
 
     def __str__(self) -> str:
         return self.title
+
+    def get_absolute_url(self) -> str:
+        return ""
 
     class Meta:
         verbose_name = "listing"
@@ -154,6 +158,8 @@ class ItemProxy(ItemListing):
 
     lastweek_objects = WeeklyListingManager()
 
+    get_color_display: Callable[..., str]
+
     @property
     def email_info(self):
         return f"""
@@ -171,6 +177,7 @@ class ItemProxy(ItemListing):
 class AutoProxy(AutoListing):
 
     lastweek_objects = WeeklyListingManager()
+    get_condition_display: Callable[..., str]
 
     @property
     def email_info(self):
@@ -190,6 +197,7 @@ class AutoProxy(AutoListing):
 class ServiceProxy(ServiceListing):
 
     lastweek_objects = WeeklyListingManager()
+    get_place_type_display: Callable[..., str]
 
     @property
     def email_info(self):
