@@ -1,0 +1,569 @@
+[
+{
+    "model": "sites.site",
+    "pk": 1,
+    "fields": {
+        "domain": "example.com",
+        "name": "example.com"
+    }
+},
+{
+    "model": "flatpages.flatpage",
+    "pk": 1,
+    "fields": {
+        "url": "/about/",
+        "title": "About Us",
+        "content": "<p>We&#39;re making an e-commerce website using Django!</p>",
+        "enable_comments": false,
+        "template_name": "",
+        "registration_required": false,
+        "sites": [
+            1
+        ]
+    }
+},
+{
+    "model": "flatpages.flatpage",
+    "pk": 2,
+    "fields": {
+        "url": "/contacts/",
+        "title": "Contacts",
+        "content": "<p>Contact us at ivanmclennon@github.com</p>",
+        "enable_comments": false,
+        "template_name": "",
+        "registration_required": false,
+        "sites": [
+            1
+        ]
+    }
+},
+{
+    "model": "emails.subscriber",
+    "pk": 1,
+    "fields": {
+        "email": "sub1@example.com"
+    }
+},
+{
+    "model": "emails.subscriber",
+    "pk": 2,
+    "fields": {
+        "email": "sub2@example.com"
+    }
+},
+{
+    "model": "auth.group",
+    "pk": 1,
+    "fields": {
+        "name": "common users",
+        "permissions": []
+    }
+},
+{
+    "model": "auth.user",
+    "pk": 1,
+    "fields": {
+        "password": "pbkdf2_sha256$260000$Q3pkezV1Fp4wWXQmor9S6y$ImNr49Q5GCFLKrYMhXhnLEYZK1KhbBd5CsfeyYvKiio=",
+        "last_login": null,
+        "is_superuser": false,
+        "username": "user1",
+        "first_name": "",
+        "last_name": "",
+        "email": "user1@example.com",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2021-08-28T17:40:42.192Z",
+        "groups": [
+            1
+        ],
+        "user_permissions": []
+    }
+},
+{
+    "model": "auth.user",
+    "pk": 2,
+    "fields": {
+        "password": "pbkdf2_sha256$260000$RL5ZtNE34xtaxHsriV6A9h$t99xBReppEgSWO4HQlpD/zTJSy+k6YrRPfAMScZ7j6k=",
+        "last_login": null,
+        "is_superuser": false,
+        "username": "user2",
+        "first_name": "",
+        "last_name": "",
+        "email": "user2@example.com",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2021-08-28T17:40:42.424Z",
+        "groups": [
+            1
+        ],
+        "user_permissions": []
+    }
+},
+{
+    "model": "auth.user",
+    "pk": 3,
+    "fields": {
+        "password": "pbkdf2_sha256$260000$FZ6jVS8pZJhkngFC5QWmyp$dTiYRpGas04Vv/daR1xS0W5QUMs1Sln6JJrVDC3UJqU=",
+        "last_login": null,
+        "is_superuser": false,
+        "username": "user3",
+        "first_name": "",
+        "last_name": "",
+        "email": "user3@example.com",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2021-08-28T17:40:42.643Z",
+        "groups": [
+            1
+        ],
+        "user_permissions": []
+    }
+},
+{
+    "model": "auth.user",
+    "pk": 4,
+    "fields": {
+        "password": "pbkdf2_sha256$260000$DNVkhyDhxcbmtCZOIn74XR$daNY4zkO8piTe9lZQoUdchmJ7BxnLINb+MXHh7RVDsk=",
+        "last_login": null,
+        "is_superuser": false,
+        "username": "user4",
+        "first_name": "",
+        "last_name": "",
+        "email": "user4@example.com",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2021-08-28T17:40:42.855Z",
+        "groups": [
+            1
+        ],
+        "user_permissions": []
+    }
+},
+{
+    "model": "users.seller",
+    "pk": 1,
+    "fields": {
+        "birthday": "2000-01-01",
+        "avatar": "users/sellers/NO_AVATAR.png",
+        "phone_number": "+79991111111"
+    }
+},
+{
+    "model": "users.seller",
+    "pk": 2,
+    "fields": {
+        "birthday": "2000-01-01",
+        "avatar": "users/sellers/NO_AVATAR.png",
+        "phone_number": "+79992222222"
+    }
+},
+{
+    "model": "users.seller",
+    "pk": 3,
+    "fields": {
+        "birthday": "2000-01-01",
+        "avatar": "users/sellers/NO_AVATAR.png",
+        "phone_number": "+79993333333"
+    }
+},
+{
+    "model": "users.seller",
+    "pk": 4,
+    "fields": {
+        "birthday": "2000-01-01",
+        "avatar": "users/sellers/NO_AVATAR.png",
+        "phone_number": "+79994444444"
+    }
+},
+{
+    "model": "main.tag",
+    "pk": 1,
+    "fields": {
+        "title": "cheap"
+    }
+},
+{
+    "model": "main.tag",
+    "pk": 2,
+    "fields": {
+        "title": "new"
+    }
+},
+{
+    "model": "main.tag",
+    "pk": 3,
+    "fields": {
+        "title": "used"
+    }
+},
+{
+    "model": "main.tag",
+    "pk": 4,
+    "fields": {
+        "title": "delivery"
+    }
+},
+{
+    "model": "main.tag",
+    "pk": 5,
+    "fields": {
+        "title": "credit"
+    }
+},
+{
+    "model": "main.category",
+    "pk": 1,
+    "fields": {
+        "title": "electronics",
+        "slug": "electronics"
+    }
+},
+{
+    "model": "main.category",
+    "pk": 2,
+    "fields": {
+        "title": "apparel",
+        "slug": "apparel"
+    }
+},
+{
+    "model": "main.category",
+    "pk": 3,
+    "fields": {
+        "title": "footwear",
+        "slug": "footwear"
+    }
+},
+{
+    "model": "main.category",
+    "pk": 4,
+    "fields": {
+        "title": "home and garden",
+        "slug": "home-and-garden"
+    }
+},
+{
+    "model": "main.category",
+    "pk": 5,
+    "fields": {
+        "title": "beauty and health",
+        "slug": "beauty-and-health"
+    }
+},
+{
+    "model": "main.category",
+    "pk": 6,
+    "fields": {
+        "title": "food and drinks",
+        "slug": "food-and-drinks"
+    }
+},
+{
+    "model": "main.category",
+    "pk": 7,
+    "fields": {
+        "title": "vehicles",
+        "slug": "vehicles"
+    }
+},
+{
+    "model": "main.category",
+    "pk": 8,
+    "fields": {
+        "title": "tutoring",
+        "slug": "tutoring"
+    }
+},
+{
+    "model": "main.category",
+    "pk": 9,
+    "fields": {
+        "title": "renovation",
+        "slug": "renovation"
+    }
+},
+{
+    "model": "main.category",
+    "pk": 10,
+    "fields": {
+        "title": "driving",
+        "slug": "driving"
+    }
+},
+{
+    "model": "listings.itemlisting",
+    "pk": 1,
+    "fields": {
+        "title": "Smart Watch",
+        "description": "lorem ipsum",
+        "category": 1,
+        "seller": 1,
+        "date_created": "2021-08-26T20:04:17.447Z",
+        "date_modified": "2021-08-26T20:04:17.447Z",
+        "price": 200,
+        "weight": 0.05,
+        "made_in": "CN",
+        "color": "BLACK",
+        "tags": [1,2]
+    }
+},
+{
+    "model": "listings.itemlisting",
+    "pk": 2,
+    "fields": {
+        "title": "T-shirt",
+        "description": "lorem ipsum",
+        "category": 2,
+        "seller": 2,
+        "date_created": "2021-08-26T20:04:17.468Z",
+        "date_modified": "2021-08-26T20:04:17.468Z",
+        "price": 50,
+        "weight": 0.08,
+        "made_in": "FR",
+        "color": "WHITE",
+        "tags": [2,5]
+    }
+},
+{
+    "model": "listings.itemlisting",
+    "pk": 3,
+    "fields": {
+        "title": "Shovel",
+        "description": "lorem ipsum",
+        "category": 4,
+        "seller": 2,
+        "date_created": "2021-08-26T20:04:17.478Z",
+        "date_modified": "2021-08-26T20:04:17.479Z",
+        "price": 100,
+        "weight": 1.55,
+        "made_in": "RU",
+        "color": "WHITE",
+        "tags": [3,4]
+    }
+},
+{
+    "model": "listings.itemlisting",
+    "pk": 4,
+    "fields": {
+        "title": "Toothbrush",
+        "description": "lorem ipsum",
+        "category": 5,
+        "seller": 3,
+        "date_created": "2021-08-26T20:04:17.489Z",
+        "date_modified": "2021-08-26T20:04:17.489Z",
+        "price": 150,
+        "weight": 0.15,
+        "made_in": "DE",
+        "color": "BLUE",
+        "tags": [1,3]
+    }
+},
+{
+    "model": "listings.itemlisting",
+    "pk": 5,
+    "fields": {
+        "title": "Smartphone",
+        "description": "lorem ipsum",
+        "category": 1,
+        "seller": 4,
+        "date_created": "2021-08-26T20:04:17.500Z",
+        "date_modified": "2021-08-26T20:04:17.500Z",
+        "price": 500,
+        "weight": 0.15,
+        "made_in": "CN",
+        "color": "BLUE",
+        "tags": [3,5]
+    }
+},
+{
+    "model": "listings.itemlisting",
+    "pk": 6,
+    "fields": {
+        "title": "Pizza knife",
+        "description": "lorem ipsum",
+        "category": 4,
+        "seller": 4,
+        "date_created": "2021-08-26T20:04:17.509Z",
+        "date_modified": "2021-08-28T13:09:19.304Z",
+        "price": 15,
+        "weight": 0.1,
+        "made_in": "IT",
+        "color": "RED",
+        "tags": [1,2]
+    }
+},
+{
+    "model": "listings.autolisting",
+    "pk": 1,
+    "fields": {
+        "title": "Mercedes AMG",
+        "description": "lorem ipsum",
+        "category": 7,
+        "seller": 1,
+        "date_created": "2021-08-26T20:04:17.537Z",
+        "date_modified": "2021-08-26T20:04:17.537Z",
+        "price": 50000,
+        "weight": 2000.0,
+        "made_in": "DE",
+        "color": "BLUE",
+        "condition": "NEW",
+        "mileage": 0,
+        "tags": [1]
+    }
+},
+{
+    "model": "listings.autolisting",
+    "pk": 2,
+    "fields": {
+        "title": "BMW X5",
+        "description": "lorem ipsum",
+        "category": 7,
+        "seller": 1,
+        "date_created": "2021-08-26T20:04:17.543Z",
+        "date_modified": "2021-08-26T20:04:17.543Z",
+        "price": 60000,
+        "weight": 2500.0,
+        "made_in": "DE",
+        "color": "BLACK",
+        "condition": "USED",
+        "mileage": 1000,
+        "tags": [3]
+    }
+},
+{
+    "model": "listings.autolisting",
+    "pk": 3,
+    "fields": {
+        "title": "VAZ 2104",
+        "description": "lorem ipsum",
+        "category": 7,
+        "seller": 2,
+        "date_created": "2021-08-26T20:04:17.549Z",
+        "date_modified": "2021-08-26T20:04:17.549Z",
+        "price": 1000,
+        "weight": 1500.0,
+        "made_in": "RU",
+        "color": "GREEN",
+        "condition": "USED",
+        "mileage": 15000,
+        "tags": [3,4]
+    }
+},
+{
+    "model": "listings.autolisting",
+    "pk": 4,
+    "fields": {
+        "title": "Go-kart",
+        "description": "lorem ipsum",
+        "category": 7,
+        "seller": 3,
+        "date_created": "2021-08-26T20:04:17.556Z",
+        "date_modified": "2021-08-26T20:04:17.556Z",
+        "price": 5000,
+        "weight": 200.0,
+        "made_in": "FR",
+        "color": "RED",
+        "condition": "NEW",
+        "mileage": 0,
+        "tags": [1,5]
+    }
+},
+{
+    "model": "listings.autolisting",
+    "pk": 5,
+    "fields": {
+        "title": "Huyndai Solaris",
+        "description": "lorem ipsum",
+        "category": 7,
+        "seller": 4,
+        "date_created": "2021-08-26T20:04:17.561Z",
+        "date_modified": "2021-08-26T20:04:17.561Z",
+        "price": 40000,
+        "weight": 1200.0,
+        "made_in": "KR",
+        "color": "WHITE",
+        "condition": "USED",
+        "mileage": 123,
+        "tags": [3,4]
+    }
+},
+{
+    "model": "listings.autolisting",
+    "pk": 6,
+    "fields": {
+        "title": "Kia Rio",
+        "description": "lorem ipsum",
+        "category": 7,
+        "seller": 4,
+        "date_created": "2021-08-26T20:04:17.567Z",
+        "date_modified": "2021-08-28T13:32:16.259Z",
+        "price": 45000,
+        "weight": 1300.0,
+        "made_in": "KR",
+        "color": "YELLOW",
+        "condition": "NEW",
+        "mileage": 0,
+        "tags": [1]
+    }
+},
+{
+    "model": "listings.servicelisting",
+    "pk": 1,
+    "fields": {
+        "title": "Teach Python",
+        "description": "lorem ipsum",
+        "category": 8,
+        "seller": 1,
+        "date_created": "2021-08-26T20:04:17.582Z",
+        "date_modified": "2021-08-26T20:04:17.582Z",
+        "price": 10,
+        "place_type": "ONLINE",
+        "tags": [1,2]
+    }
+},
+{
+    "model": "listings.servicelisting",
+    "pk": 2,
+    "fields": {
+        "title": "Window installation",
+        "description": "lorem ipsum",
+        "category": 9,
+        "seller": 2,
+        "date_created": "2021-08-26T20:04:17.587Z",
+        "date_modified": "2021-08-26T20:04:17.587Z",
+        "price": 200,
+        "place_type": "IRL",
+        "tags": [1]
+    }
+},
+{
+    "model": "listings.servicelisting",
+    "pk": 3,
+    "fields": {
+        "title": "Personal driver",
+        "description": "lorem ipsum",
+        "category": 10,
+        "seller": 3,
+        "date_created": "2021-08-26T20:04:17.592Z",
+        "date_modified": "2021-08-26T20:04:17.592Z",
+        "price": 100,
+        "place_type": "IRL",
+        "tags": [4]
+    }
+},
+{
+    "model": "listings.servicelisting",
+    "pk": 4,
+    "fields": {
+        "title": "Personal stylist",
+        "description": "lorem ipsum",
+        "category": 8,
+        "seller": 3,
+        "date_created": "2021-08-26T20:04:17.597Z",
+        "date_modified": "2021-08-26T20:04:17.597Z",
+        "price": 50,
+        "place_type": "ONLINE",
+        "tags": [5]
+    }
+}
+]
